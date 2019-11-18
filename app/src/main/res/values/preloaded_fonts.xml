@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/abril_fatface</item>
+        <item>@font/playfair_display</item>
+        <item>@font/playfair_display_black</item>
+        <item>@font/playfair_display_bold</item>
+        <item>@font/playfair_display_sc</item>
+        <item>@font/roboto</item>
+        <item>@font/roboto_medium</item>
+        <item>@font/roboto_thin</item>
+    </array>
+</resources>

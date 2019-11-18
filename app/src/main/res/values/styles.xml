@@ -1,0 +1,19 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@android:color/black</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:theme">@style/Theme.Design.Light.NoActionBar</item>
+    </style>
+
+    <style name="fab_action" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#ffa</item>
+        <item name="colorPrimaryDark">#fff</item>
+        <item name="colorAccent">#fff</item>
+    </style>
+
+</resources>
