@@ -1,65 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp"
-    android:layout_margin="4dp"
-    android:elevation="15dp"
-    >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="Top Headines"
+        android:textSize="24dp"
+        android:textColor="#1B1B1B"
+        android:fontFamily="@font/playfair_display_black"/>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            app:cardCornerRadius="10dp"
-            android:layout_marginRight="5dp"
-            android:elevation="15dp"
-            android:backgroundTint="@android:color/white"
-            android:padding="0.2dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/placeholder_image"
-                />
+        <include
+            layout="@layout/item_top_headlines"/>
+        <include
+            layout="@layout/item_top_headlines"/>
+        <include
+            layout="@layout/item_top_headlines"/>
+        <include
+            layout="@layout/item_top_headlines"/>
+        <include
+            layout="@layout/item_top_headlines"/>
+        <include
+            layout="@layout/item_top_headlines"/>
 
-        </androidx.cardview.widget.CardView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="5dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lines="4"
-                android:text="Headline"
-                android:textColor="@android:color/black"
-                android:fontFamily="@font/roboto_medium"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="Date"
-                android:textColor="@android:color/darker_gray"
-                android:fontFamily="@font/roboto"
-                android:textSize="14dp"/>
-
-
-        </LinearLayout>
 
     </LinearLayout>
+    </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</ScrollView>

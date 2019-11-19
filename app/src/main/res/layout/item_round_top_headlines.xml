@@ -10,7 +10,7 @@
     android:layout_height="90dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="50dp"
+    app:cardCornerRadius="45dp"
     android:layout_gravity="center"
     >
 
@@ -22,21 +22,21 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="43dp"
         android:layout_margin="2dp"
         android:elevation="0dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardCornerRadius="50dp"
+            app:cardCornerRadius="41dp"
             android:layout_margin="2dp"
             android:elevation="0dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/placeholder_image"
+                android:src="@drawable/technology_1493463690"
                 android:scaleType="centerCrop"/>
 
 

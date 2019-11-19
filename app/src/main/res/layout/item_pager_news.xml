@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    
+    <androidx.cardview.widget.CardView
+        android:layout_width="240dp"
+        android:layout_height="160dp"
+        android:elevation="10dp"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="5dp"
+        android:outlineSpotShadowColor="@android:color/holo_blue_dark"
+        android:outlineAmbientShadowColor="@android:color/holo_blue_dark">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/dummy_news"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_transparent_black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="8dp"
+            android:fontFamily="@font/adamina"
+            android:maxLines="2"
+            android:text="NewsUp is platform where you can get all the latest news."
+            android:textColor="@android:color/white"
+            android:textSize="14dp" />
+
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
