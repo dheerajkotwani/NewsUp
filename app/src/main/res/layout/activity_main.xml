@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"
+    tools:context=".Activities.MainActivity"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
@@ -25,7 +25,7 @@
 
 <!--        <variable-->
 <!--            name="myNews"-->
-<!--            type="project.dheeraj.newsup2.myNews" />-->
+<!--            type="project.dheeraj.newsup2.Model.myNews" />-->
 
 <!--    </data>-->
 
@@ -36,7 +36,7 @@
             >
 
            <include
-               layout="@layout/layout_top_headlines"/>
+               layout="@layout/layout_main_screen"/>
 
 
         </LinearLayout>

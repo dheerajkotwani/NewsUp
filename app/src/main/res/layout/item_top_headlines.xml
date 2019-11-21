@@ -60,8 +60,7 @@
                 android:text="Nov 19, 2019 | 04:32 am"
                 android:textColor="@android:color/darker_gray"
                 android:fontFamily="@font/roboto"
-                android:textSize="14dp"/>
-
+                android:textSize="12dp"/>
 
         </LinearLayout>
 

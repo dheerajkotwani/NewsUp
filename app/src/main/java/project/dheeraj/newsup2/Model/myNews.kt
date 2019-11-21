@@ -1,4 +1,4 @@
-package project.dheeraj.newsup2
+package project.dheeraj.newsup2.Model
 
 data class myNews(
     var headline : String = "",

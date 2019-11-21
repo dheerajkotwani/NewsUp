@@ -131,6 +131,22 @@
         android:columnCount="1"
         >
 
+<!--        <include-->
+<!--            layout="@layout/item_category_news"-->
+<!--        />-->
+
+<!--        <include-->
+<!--            layout="@layout/item_category_news"-->
+<!--            />-->
+<!--        <include-->
+<!--            layout="@layout/item_category_news"-->
+<!--            />-->
+<!--        <include-->
+<!--            layout="@layout/item_category_news"-->
+<!--            />-->
+<!--        <include-->
+<!--            layout="@layout/item_category_news"-->
+<!--            />-->
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
