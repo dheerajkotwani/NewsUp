@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/black">
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/welcomeTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/playfair_display_black"
@@ -49,7 +60,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp">
 
     <TextView
@@ -59,9 +70,10 @@
         android:textSize="16dp"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:textColor="#141414"/>
+        android:textColor="#2C2C2C"/>
 
         <TextView
+            android:id="@+id/view_all_top_stories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="View All"
@@ -75,9 +87,9 @@
 
     <View
         android:layout_width="20dp"
-        android:layout_height="1dp"
-        android:background="#1B1B1B"
-        android:layout_marginLeft="5dp"
+        android:layout_height="2dp"
+        android:background="#2C2C2C"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="4dp"/>
 
 
@@ -112,16 +124,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Suggested Topics"
-        android:textColor="#1B1B1B"
+        android:textColor="#2C2C2C"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:textSize="16dp"/>
 
     <View
         android:layout_width="20dp"
-        android:layout_height="1dp"
-        android:background="#1B1B1B"
-        android:layout_marginLeft="5dp"
+        android:layout_height="2dp"
+        android:background="#2C2C2C"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="4dp"/>
 
     <GridLayout
@@ -224,3 +236,13 @@
 
 
 </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/screen_border"
+        android:layout_marginLeft="-30dp"
+        android:layout_marginRight="-30dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginBottom="-30dp"/>
+</androidx.cardview.widget.CardView>

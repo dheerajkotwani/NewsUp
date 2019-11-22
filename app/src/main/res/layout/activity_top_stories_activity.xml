@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".top_stories_activity">
+    tools:context=".Activities.TopStoriesActivity">
+
+    <include
+        layout="@layout/layout_top_headlines"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

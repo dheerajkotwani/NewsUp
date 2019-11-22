@@ -1,8 +1,11 @@
 package project.dheeraj.newsup2.Activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import project.dheeraj.newsup2.R
 import project.dheeraj.newsup2.Retrofit.ApiInterface
@@ -14,9 +17,18 @@ import project.dheeraj.newsup2.Model.ArticlesModel as ArticlesModel1
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var topStories: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        topStories = findViewById(R.id.view_all_top_stories)
+
+        topStories.setOnClickListener {
+            intent  = Intent(this, TopStoriesActivity::class.java)
+            startActivity(intent)
+        }
 
         val apiInterface : ApiInterface = RetrofitClient.getClient().create(
             ApiInterface::class.java)
