@@ -43,7 +43,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="-40dp"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="20dp"
+        android:elevation="15dp"
+        app:cardElevation="15dp">
 
 
         <ScrollView
@@ -90,7 +92,7 @@
                     android:layout_marginRight="15dp"
                     android:fontFamily="@font/roboto"
                     android:text="Description"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="#4B4B4B"
                     android:textSize="16dp" />
 
                 <TextView
@@ -102,7 +104,7 @@
                     android:layout_marginRight="15dp"
                     android:fontFamily="@font/roboto"
                     android:text="Content"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="#4B4B4B"
                     android:textSize="16dp"
                     android:maxLength="260" />
 
@@ -125,7 +127,8 @@
         app:rippleColor="#FF871F"
         app:fabSize="normal"
         android:clickable="true"
-        android:elevation="30dp" />
+        android:elevation="20dp"
+        app:elevation="20dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/news_full_fab_bookmark_filled"
@@ -141,7 +144,8 @@
         android:theme="@style/fab_action"
         app:rippleColor="#FF871F"
         android:clickable="true"
-        android:elevation="30dp" />
+        android:elevation="20dp"
+        app:elevation="20dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/news_full_fab_share"
@@ -157,7 +161,9 @@
         android:paddingBottom="4dp"
         app:rippleColor="#FF871F"
         android:clickable="true"
-        android:layout_marginRight="25dp" />
+        android:layout_marginRight="25dp"
+        app:elevation="20dp"
+        android:elevation="20dp"/>
 
 
 </RelativeLayout>

@@ -1,26 +1,20 @@
 package project.dheeraj.newsup2.Activities
 
 import android.annotation.SuppressLint
-import android.opengl.Visibility
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
-import org.w3c.dom.Text
 import project.dheeraj.newsup2.R
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import java.util.*
 
 class SingleNewsActivity : AppCompatActivity() {
@@ -29,6 +23,9 @@ class SingleNewsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_single_news)
+
+        val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
 
         val image = findViewById<ImageView>(R.id.news_full_image)
         val title = findViewById<TextView>(R.id.news_full_headline_text)
@@ -65,33 +62,47 @@ class SingleNewsActivity : AppCompatActivity() {
 
         fabShare.setOnClickListener {
             Toast.makeText(this, getString(R.string.share), Toast.LENGTH_SHORT).show()
+
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "*${intent.getStringExtra(getString(R.string.title))}*\n\n" +
+                        "${intent.getStringExtra(getString(R.string.description))}\n\n" +
+                        "To read full news visit:\n${intent.getStringExtra(getString(R.string.url))}\n\n" +
+                        "*Sent from NewsUp Android App: Kotlin*\n*Developer: Dheeraj*")
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+
         }
 
     }
 
-//    fun convertISOTimeToDate(isoTime: String): String? {
-//        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-//        var convertedDate: Date? = null
-//        var formattedDate: String? = null
-//        try {
-//            convertedDate = sdf.parse(isoTime)
-//            formattedDate = SimpleDateFormat("MMMMM dd,yyyy").format(convertedDate)
-//        } catch (e: ParseException) {
-//            e.printStackTrace()
-//        }
-//
-//        return formattedDate
-//    }
 
     fun convertISOTimeToDate(isoTime: String): String? {
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         var convertedDate: Date? = null
         var formattedDate: String? = null
-        var formattedTime: String? = null
+        var formattedTime: String = "10:00 AM"
         try {
             convertedDate = sdf.parse(isoTime)
             formattedDate = SimpleDateFormat("MMM d, yyyy").format(convertedDate)
             formattedTime = SimpleDateFormat("HH:mm a").format(convertedDate)
+
+            if(formattedTime.subSequence(6,8).toString().equals("PM") && formattedTime.subSequence(0,2).toString().toInt()>12){
+                formattedTime = (formattedTime.subSequence(0,2).toString().toInt()-12).toString()+formattedTime.subSequence(2,8).toString()
+            }
+            if (formattedTime.subSequence(0,2).toString().equals("00")){
+                formattedTime = (formattedTime.subSequence(0,2).toString().toInt()+1).toString()+formattedTime.subSequence(2,8).toString()
+
+            }
+            if (formattedTime.subSequence(0,2).toString().equals("0:")){
+                formattedTime = (formattedTime.subSequence(0,1).toString().toInt()+1).toString()+formattedTime.subSequence(2,8).toString()
+
+            }
+
+
             Log.d("Date ", formattedDate+" | "+formattedTime)
         } catch (e: ParseException) {
             e.printStackTrace()

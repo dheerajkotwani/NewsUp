@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1099454522152",
+    "firebase_url": "https://newsup-2-e2ad7.firebaseio.com",
+    "project_id": "newsup-2-e2ad7",
+    "storage_bucket": "newsup-2-e2ad7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1099454522152:android:f709ba31ae1b77390ba61d",
+        "android_client_info": {
+          "package_name": "project.dheeraj.newsup2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1099454522152-pff2a9vcbe1ia221tdf5se4r1cp6s6cb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "project.dheeraj.newsup2",
+            "certificate_hash": "b9b6edabaaed4d1e6677759f5243447991a42d97"
+          }
+        },
+        {
+          "client_id": "1099454522152-811nhuo7dbrfd3u8g0arh1vaundcvvb4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6GQe4UzqNp4WNT52yEWbb-9DO_7S6TuA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1099454522152-811nhuo7dbrfd3u8g0arh1vaundcvvb4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

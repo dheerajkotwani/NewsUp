@@ -11,7 +11,7 @@ import retrofit2.http.GET
 interface ApiInterface {
 
 
-    @GET(topHeadlines+country+"=in&"+pageSize+"=100&"+ apiKey)
+    @GET("$topHeadlines$country=in&$pageSize=100&$apiKey")
     fun getArticlesModel() : Call<ArticlesModel>
 
 

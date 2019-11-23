@@ -1,18 +1,17 @@
 package project.dheeraj.newsup2.Activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
-import kotlinx.android.synthetic.main.layout_main_screen.*
+import com.google.firebase.analytics.FirebaseAnalytics
 import project.dheeraj.newsup2.Adapters.SuggestedTopicsRecyclerViewAdapter
 import project.dheeraj.newsup2.Adapters.TopStoriesHomeRecyclerViewAdapter
 import project.dheeraj.newsup2.Model.NewsHeadlines
@@ -23,7 +22,10 @@ import project.dheeraj.newsup2.Retrofit.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 import project.dheeraj.newsup2.Model.ArticlesModel as ArticlesModel1
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,17 +33,24 @@ class MainActivity : AppCompatActivity() {
     lateinit var topStoriesRecyclerView : RecyclerView
     lateinit var suggestedTopicsRecyclerView : RecyclerView
     lateinit var skeleton: Skeleton
+    lateinit var homeSwipeRefreshLayout: SwipeRefreshLayout
+    lateinit var firebaseAnalytics: FirebaseAnalytics
+    lateinit var welcomeText : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(project.dheeraj.newsup2.R.layout.activity_main)
 
-        topStories = findViewById(R.id.view_all_top_stories)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        topStories = findViewById(project.dheeraj.newsup2.R.id.view_all_top_stories)
+        welcomeText = findViewById(project.dheeraj.newsup2.R.id.welcomeTextView)
 
         topStoriesRecyclerView = findViewById(R.id.top_stories_recycler_view)
         suggestedTopicsRecyclerView = findViewById(R.id.suggested_topics_recycler_view)
+        homeSwipeRefreshLayout = findViewById(R.id.home_swipe_refresh)
 
-        skeleton = topStoriesRecyclerView.applySkeleton(R.layout.shimmer_round_top_headlines, 5)
+        skeleton = topStoriesRecyclerView.applySkeleton(project.dheeraj.newsup2.R.layout.shimmer_round_top_headlines, 5)
         skeleton.maskCornerRadius = 480F
         skeleton.shimmerDurationInMillis = 1500
         skeleton.showSkeleton()
@@ -51,8 +60,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        getCurrentTime()
         getTopics()
         getNews()
+
+        homeSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_dark,
+            android.R.color.holo_red_dark,
+            android.R.color.holo_purple,
+            android.R.color.holo_green_dark)
+
+        homeSwipeRefreshLayout.setOnRefreshListener {
+            getCurrentTime()
+            getNews()
+        }
 
 
     }
@@ -61,13 +81,13 @@ class MainActivity : AppCompatActivity() {
 
         var suggestedTopics = mutableListOf<SuggestedTopics>()
 
-        suggestedTopics.add(SuggestedTopics(R.drawable.business, "Business"))
-        suggestedTopics.add(SuggestedTopics(R.drawable.entertainment, "Entertainment"))
-        suggestedTopics.add(SuggestedTopics(R.drawable.sports, "Sports"))
-        suggestedTopics.add(SuggestedTopics(R.drawable.science, "Science"))
-        suggestedTopics.add(SuggestedTopics(R.drawable.technology, "Technology"))
-        suggestedTopics.add(SuggestedTopics(R.drawable.medical, "Medical"))
-        suggestedTopics.add(SuggestedTopics(R.drawable.international2, "International"))
+        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.business, "Business"))
+        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.entertainment, "Entertainment"))
+        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.sports, "Sports"))
+        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.science, "Science"))
+        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.technology, "Technology"))
+        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.medical, "Medical"))
+        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.international2, "International"))
 
         suggestedTopicsRecyclerView.layoutManager = GridLayoutManager(applicationContext, 3)
         suggestedTopicsRecyclerView.adapter = SuggestedTopicsRecyclerViewAdapter(applicationContext, suggestedTopics)
@@ -85,7 +105,9 @@ class MainActivity : AppCompatActivity() {
                 call: Call<project.dheeraj.newsup2.Model.ArticlesModel>?,
                 t: Throwable?
             ) {
+                Toast.makeText(applicationContext, "Error Loading Data",Toast.LENGTH_SHORT).show()
                 Log.e("Error", t?.message.toString())
+                homeSwipeRefreshLayout.isRefreshing = false
             }
 
             override fun onResponse(
@@ -116,7 +138,7 @@ class MainActivity : AppCompatActivity() {
                                 )
 
                                 Log.d(
-                                    "Data " + i.toString(),
+                                    "Data $i",
                                     (response.body()!!.articles.get(i).author +
                                             response.body()!!.articles.get(i).title +
                                             response.body()!!.articles.get(i).description +
@@ -126,27 +148,58 @@ class MainActivity : AppCompatActivity() {
                                             response.body()!!.articles.get(i).content)
                                 )
                             }
+
+                            homeSwipeRefreshLayout.isRefreshing = false
+
                         }
                     }
                 }
 
                 topStoriesRecyclerView.adapter = TopStoriesHomeRecyclerViewAdapter(applicationContext, myNewsList)
 
-
-
-
-                Toast.makeText(
-                    this@MainActivity,
-                    response?.body()?.totalResults.toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
-                Log.d("Response", response?.body()?.totalResults.toString())
-                Log.d("List Items", myNewsList.size.toString())
+                Log.d("Total Results: ", response?.body()?.totalResults.toString())
+                Log.d("List Items: ", myNewsList.size.toString())
 
             }
 
         })
     }
+
+    fun getCurrentTime(){
+
+        val dateFormatter = SimpleDateFormat("hh a")
+        dateFormatter.setLenient(false)
+        val today = Date()
+        val s = dateFormatter.format(today)
+//        Toast.makeText(this, s.subSequence(0,2), Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, s.subSequence(3,5), Toast.LENGTH_SHORT).show()
+
+        val time = s.subSequence(0,2).toString().toInt()
+        val timeDuration = s.subSequence(3, 5).toString()
+
+        if ((time <4 || time == 12) && timeDuration.equals("PM")){
+//            Toast.makeText(this, "Good Afternoon!", Toast.LENGTH_SHORT).show()
+            welcomeText.text = "Good Afternoon!"
+        }
+        else if (time in 5..8 && timeDuration.equals("PM")){
+//            Toast.makeText(this, "Good Evening!", Toast.LENGTH_SHORT).show()
+            welcomeText.text = "Good Evening!"
+        }
+        else if (time in 9..11 && timeDuration.equals("PM")){
+//            Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show()
+            welcomeText.text = "Welcome!"
+        }
+        else if ((time <4 || time == 12)  && timeDuration.equals("AM")){
+//            Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show()
+            welcomeText.text = "Welcome!"
+        }
+        else if (time in 5..11 && timeDuration.equals("AM")){
+//            Toast.makeText(this, "Good Morning!", Toast.LENGTH_SHORT).show()
+            welcomeText.text = "Good Morning!"
+        }
+
+    }
+
 
 
 }
