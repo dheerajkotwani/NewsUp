@@ -48,4 +48,7 @@ dependencies {
     //RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
+    //Skeleton View
+    implementation 'com.faltenreich:skeletonlayout:1.0.0'
+
 }

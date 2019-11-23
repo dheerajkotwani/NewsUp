@@ -7,10 +7,16 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.DrawableRes
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.faltenreich.skeletonlayout.Skeleton
+import com.faltenreich.skeletonlayout.applySkeleton
 import kotlinx.android.synthetic.main.layout_main_screen.*
+import project.dheeraj.newsup2.Adapters.SuggestedTopicsRecyclerViewAdapter
 import project.dheeraj.newsup2.Adapters.TopStoriesHomeRecyclerViewAdapter
 import project.dheeraj.newsup2.Model.NewsHeadlines
+import project.dheeraj.newsup2.Model.SuggestedTopics
 import project.dheeraj.newsup2.R
 import project.dheeraj.newsup2.Retrofit.ApiInterface
 import project.dheeraj.newsup2.Retrofit.RetrofitClient
@@ -23,23 +29,48 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var topStories: TextView
     lateinit var topStoriesRecyclerView : RecyclerView
-    lateinit var topStoriesAdapter : TopStoriesHomeRecyclerViewAdapter
+    lateinit var suggestedTopicsRecyclerView : RecyclerView
+    lateinit var skeleton: Skeleton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         topStories = findViewById(R.id.view_all_top_stories)
+
         topStoriesRecyclerView = findViewById(R.id.top_stories_recycler_view)
+        suggestedTopicsRecyclerView = findViewById(R.id.suggested_topics_recycler_view)
+
+        skeleton = topStoriesRecyclerView.applySkeleton(R.layout.shimmer_round_top_headlines, 5)
+        skeleton.maskCornerRadius = 480F
+        skeleton.shimmerDurationInMillis = 1500
+        skeleton.showSkeleton()
 
         topStories.setOnClickListener {
             intent  = Intent(this, TopStoriesActivity::class.java)
             startActivity(intent)
         }
 
+        getTopics()
         getNews()
 
 
+    }
+
+    private fun getTopics() {
+
+        var suggestedTopics = mutableListOf<SuggestedTopics>()
+
+        suggestedTopics.add(SuggestedTopics(R.drawable.business, "Business"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.entertainment, "Entertainment"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.sports, "Sports"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.science, "Science"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.technology, "Technology"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.medical, "Medical"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.international2, "International"))
+
+        suggestedTopicsRecyclerView.layoutManager = GridLayoutManager(applicationContext, 3)
+        suggestedTopicsRecyclerView.adapter = SuggestedTopicsRecyclerViewAdapter(applicationContext, suggestedTopics)
     }
 
     private fun getNews() {

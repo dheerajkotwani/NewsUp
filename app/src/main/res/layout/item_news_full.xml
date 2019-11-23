@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
@@ -8,44 +7,50 @@
     android:background="@android:color/black">
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_news_image"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_news_image"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        app:cardCornerRadius="20dp"
+        tools:cardCornerRadius="20dp">
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="270dp"
-            app:cardCornerRadius="20dp"
-            tools:cardCornerRadius="20dp">
+            android:layout_height="270dp">
 
-            <FrameLayout
+            <ImageView
+                android:id="@+id/news_full_image"
                 android:layout_width="match_parent"
-                android:layout_height="270dp">
+                android:layout_height="270dp"
+                android:layout_marginBottom="20dp"
+                android:scaleType="centerCrop" />
 
-                <ImageView
-                    android:id="@+id/news_full_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="270dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/placeholder_image" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:layout_marginLeft="-20dp"
+                android:layout_marginTop="-20dp"
+                android:layout_marginRight="-20dp"
+                android:src="@drawable/image_border" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="340dp"
-                    android:layout_marginLeft="-20dp"
-                    android:layout_marginTop="-20dp"
-                    android:layout_marginRight="-20dp"
-                    android:src="@drawable/image_border" />
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
 
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_news_content"
-            android:layout_below="@id/card_news_image"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_news_content"
+        android:layout_below="@id/card_news_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-40dp"
+        app:cardCornerRadius="20dp">
+
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="-40dp"
-            app:cardCornerRadius="20dp">
-
-
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,7 +63,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
-                    android:layout_marginTop="35dp"
                     android:layout_marginRight="15dp"
                     android:fontFamily="@font/roboto_medium"
                     android:text="Heading :"
@@ -66,7 +70,7 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:id="@+id/news_date_text"
+                    android:id="@+id/news_full_date_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -99,53 +103,48 @@
                     android:fontFamily="@font/roboto"
                     android:text="Content"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:maxLength="260" />
 
             </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_bookmark_border"
-            android:visibility="visible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_bookmark_border"
-            android:layout_toLeftOf="@id/fab_share"
-            android:layout_above="@+id/card_news_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="12dp"
-            android:theme="@style/fab_action"
-            app:rippleColor="#FF871F"
-            app:fabSize="normal"
-            android:clickable="true"
-            android:elevation="30dp"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_bookmark_filled"
-            android:visibility="visible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabSize="normal"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/ic_bookmark_orange_fill"
-            android:layout_toLeftOf="@id/fab_share"
-            android:layout_above="@+id/card_news_content"
-            android:layout_marginRight="10dp"
-            android:theme="@style/fab_action"
-            app:rippleColor="#FF871F"
-            android:clickable="true"
-            android:elevation="30dp"/>
-
-
-
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_share"
+        android:id="@+id/fab_news_full_bookmark_border"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_bookmark_border"
+        android:layout_toLeftOf="@id/news_full_fab_share"
+        android:layout_above="@+id/card_news_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="12dp"
+        android:theme="@style/fab_action"
+        app:rippleColor="#FF871F"
+        app:fabSize="normal"
+        android:clickable="true"
+        android:elevation="30dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/news_full_fab_bookmark_filled"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        android:layout_marginBottom="12dp"
+        android:src="@drawable/ic_bookmark_orange_fill"
+        android:layout_toLeftOf="@id/news_full_fab_share"
+        android:layout_above="@+id/card_news_content"
+        android:layout_marginRight="10dp"
+        android:theme="@style/fab_action"
+        app:rippleColor="#FF871F"
+        android:clickable="true"
+        android:elevation="30dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/news_full_fab_share"
         android:visibility="visible"
         android:theme="@style/fab_action"
         android:layout_width="wrap_content"
@@ -158,9 +157,7 @@
         android:paddingBottom="4dp"
         app:rippleColor="#FF871F"
         android:clickable="true"
-        android:layout_marginRight="25dp"
-        />
-
+        android:layout_marginRight="25dp" />
 
 
 </RelativeLayout>

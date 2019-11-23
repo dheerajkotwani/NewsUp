@@ -9,5 +9,16 @@
     <include
         layout="@layout/layout_top_headlines"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/screen_border"
+        android:layout_marginLeft="-30dp"
+        android:layout_marginRight="-30dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginBottom="-30dp"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

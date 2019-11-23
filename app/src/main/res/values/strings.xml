@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">NewsUp 2</string>
+    <string name="content">content</string>
+    <string name="description">description</string>
+    <string name="author">author</string>
+    <string name="url">url</string>
+    <string name="urlToImage">urlToImage</string>
+    <string name="title">title</string>
+    <string name="publishedAt">publishedAt</string>
+    <string name="bookmarkAdded">Added to Bookmarks</string>
+    <string name="bookmarkRemoved">Removed from Bookmarks</string>
+    <string name="share">Share</string>
 </resources>

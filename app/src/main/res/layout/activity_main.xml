@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Activities.MainActivity"
     android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:background="@android:color/black"
-    app:cardCornerRadius="20dp">
+    android:layout_width="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/black"
-            >
+    <include
+        layout="@layout/layout_main_screen"/>
 
-           <include
-               layout="@layout/layout_main_screen"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/screen_border"
+        android:layout_marginLeft="-30dp"
+        android:layout_marginRight="-30dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginBottom="-30dp"
+        />
 
-
-        </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

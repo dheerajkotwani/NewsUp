@@ -1,9 +1,7 @@
 package project.dheeraj.newsup2.Adapters
 
-import android.app.Activity
 import android.content.Context
-import android.os.Parcel
-import android.os.Parcelable
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.squareup.picasso.Picasso
 import project.dheeraj.newsup2.Model.NewsHeadlines
 import project.dheeraj.newsup2.R
+import project.dheeraj.newsup2.Activities.SingleNewsActivity
 
 class TopStoriesHomeRecyclerViewAdapter(var context : Context, var newsheadlines : List<NewsHeadlines>) : RecyclerView.Adapter<TopStoriesHomeViewHolder>(){
 
@@ -49,6 +48,18 @@ class TopStoriesHomeRecyclerViewAdapter(var context : Context, var newsheadlines
             .placeholder(R.drawable.index)
             .into(holder.image)
 
+        holder.image.setOnClickListener {
+            val intent = Intent(context, SingleNewsActivity::class.java);
+            intent.putExtra(context.getString(R.string.content), newsheadlines.get(position).content)
+            intent.putExtra(context.getString(R.string.description), newsheadlines.get(position).description)
+            intent.putExtra(context.getString(R.string.author), newsheadlines.get(position).author)
+            intent.putExtra(context.getString(R.string.url), newsheadlines.get(position).url)
+            intent.putExtra(context.getString(R.string.urlToImage), newsheadlines.get(position).urlToImage)
+            intent.putExtra(context.getString(R.string.title), newsheadlines.get(position).title)
+            intent.putExtra(context.getString(R.string.publishedAt), newsheadlines.get(position).publishedAt)
+            context.startActivity(intent)
+        }
+
 
     }
 
@@ -58,6 +69,5 @@ class TopStoriesHomeViewHolder(itemView: View) : ViewHolder(itemView) {
 
     val image : ImageView = itemView.findViewById(R.id.image_view_top_headlines_round)
     val text : TextView = itemView.findViewById(R.id.text_view_top_headlines_round)
-
 
 }
