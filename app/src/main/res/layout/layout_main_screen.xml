@@ -100,23 +100,31 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp">
 
-        <include
-            layout="@layout/item_round_top_headlines"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top_stories_recycler_view"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
 
-        <include
-            layout="@layout/item_round_top_headlines"/>
+<!--        <include-->
+<!--            layout="@layout/item_round_top_headlines"/>-->
 
-        <include
-            layout="@layout/item_round_top_headlines"/>
+<!--        <include-->
+<!--            layout="@layout/item_round_top_headlines"/>-->
 
-        <include
-            layout="@layout/item_round_top_headlines"/>
+<!--        <include-->
+<!--            layout="@layout/item_round_top_headlines"/>-->
 
-        <include
-            layout="@layout/item_round_top_headlines"/>
+<!--        <include-->
+<!--            layout="@layout/item_round_top_headlines"/>-->
 
-        <include
-            layout="@layout/item_round_top_headlines"/>
+<!--        <include-->
+<!--            layout="@layout/item_round_top_headlines"/>-->
+
+<!--        <include-->
+<!--            layout="@layout/item_round_top_headlines"/>-->
 
     </LinearLayout>
 
@@ -237,12 +245,12 @@
 
 </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/screen_border"
-        android:layout_marginLeft="-30dp"
-        android:layout_marginRight="-30dp"
-        android:layout_marginTop="-30dp"
-        android:layout_marginBottom="-30dp"/>
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/screen_border"-->
+<!--        android:layout_marginLeft="-30dp"-->
+<!--        android:layout_marginRight="-30dp"-->
+<!--        android:layout_marginTop="-30dp"-->
+<!--        android:layout_marginBottom="-30dp"/>-->
 </androidx.cardview.widget.CardView>

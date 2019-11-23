@@ -34,6 +34,7 @@
             android:elevation="0dp">
 
             <ImageView
+                android:id="@+id/image_view_top_headlines_round"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/technology_1493463690"
@@ -47,6 +48,7 @@
 </androidx.cardview.widget.CardView>
 
     <TextView
+        android:id="@+id/text_view_top_headlines_round"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLength="15"
