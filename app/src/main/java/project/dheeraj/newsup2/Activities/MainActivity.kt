@@ -1,14 +1,21 @@
 package project.dheeraj.newsup2.Activities
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bumptech.glide.Glide
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -36,30 +43,53 @@ class MainActivity : AppCompatActivity() {
     lateinit var homeSwipeRefreshLayout: SwipeRefreshLayout
     lateinit var firebaseAnalytics: FirebaseAnalytics
     lateinit var welcomeText : TextView
+    lateinit var layoutMain : View
+    lateinit var dialogNoInternet : View
+    lateinit var buttonTryAgain : Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(project.dheeraj.newsup2.R.layout.activity_main)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        val conMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
 
         topStories = findViewById(project.dheeraj.newsup2.R.id.view_all_top_stories)
         welcomeText = findViewById(project.dheeraj.newsup2.R.id.welcomeTextView)
+        layoutMain = findViewById(R.id.layout_main)
+        dialogNoInternet = findViewById(R.id.dialog_no_internet)
+        buttonTryAgain = findViewById(R.id.button_try_again)
 
-        topStoriesRecyclerView = findViewById(R.id.top_stories_recycler_view)
-        suggestedTopicsRecyclerView = findViewById(R.id.suggested_topics_recycler_view)
-        homeSwipeRefreshLayout = findViewById(R.id.home_swipe_refresh)
+        topStoriesRecyclerView = findViewById(project.dheeraj.newsup2.R.id.top_stories_recycler_view)
+        suggestedTopicsRecyclerView = findViewById(project.dheeraj.newsup2.R.id.suggested_topics_recycler_view)
+        homeSwipeRefreshLayout = findViewById(project.dheeraj.newsup2.R.id.home_swipe_refresh)
 
         skeleton = topStoriesRecyclerView.applySkeleton(project.dheeraj.newsup2.R.layout.shimmer_round_top_headlines, 5)
         skeleton.maskCornerRadius = 480F
         skeleton.shimmerDurationInMillis = 1500
         skeleton.showSkeleton()
 
+        val gifImage = findViewById<ImageView>(project.dheeraj.newsup2.R.id.no_internet_image)
+
+        Glide.with(this)
+            .load(project.dheeraj.newsup2.R.drawable.no_internet_gif_2)
+            .into(gifImage)
+
         topStories.setOnClickListener {
             intent  = Intent(this, TopStoriesActivity::class.java)
             startActivity(intent)
         }
 
+        buttonTryAgain.setOnClickListener {
+            getInternetState()
+            getCurrentTime()
+            getNews()
+        }
+
+
+        getInternetState()
         getCurrentTime()
         getTopics()
         getNews()
@@ -71,6 +101,7 @@ class MainActivity : AppCompatActivity() {
 
         homeSwipeRefreshLayout.setOnRefreshListener {
             getCurrentTime()
+            getInternetState()
             getNews()
         }
 
@@ -165,6 +196,18 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        getInternetState()
+        getCurrentTime()
+    }
+
+    override fun onResume() {
+        getInternetState()
+        getCurrentTime()
+        super.onResume()
+    }
+
     fun getCurrentTime(){
 
         val dateFormatter = SimpleDateFormat("hh a")
@@ -200,6 +243,27 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun getInternetState(){
+
+        val conMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)!!.state == NetworkInfo.State.CONNECTED || conMgr.getNetworkInfo(
+                ConnectivityManager.TYPE_WIFI
+            )!!.state == NetworkInfo.State.CONNECTED
+        ) {
+            layoutMain.visibility = View.VISIBLE
+            dialogNoInternet.visibility = View.GONE
+
+
+        } else if (conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)!!.state == NetworkInfo.State.DISCONNECTED || conMgr.getNetworkInfo(
+                ConnectivityManager.TYPE_WIFI
+            )!!.state == NetworkInfo.State.DISCONNECTED
+        ) {
+            layoutMain.visibility = View.GONE
+            dialogNoInternet.visibility = View.VISIBLE
+
+        }
+    }
 
 
 }

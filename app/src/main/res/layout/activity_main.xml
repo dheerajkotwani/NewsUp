@@ -7,14 +7,18 @@
     android:layout_width="match_parent"
     android:id="@+id/home_swipe_refresh">
 
-<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--        android:id="@+id/home_swipe_refresh"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <include
+        android:id="@+id/layout_main"
         layout="@layout/layout_main_screen"/>
+
+    <include
+        android:id="@+id/dialog_no_internet"
+        android:visibility="gone"
+        layout="@layout/dialog_no_internet"/>
 
     <ImageView
         android:layout_width="match_parent"
@@ -25,6 +29,7 @@
         android:layout_marginTop="-30dp"
         android:layout_marginBottom="-30dp"
         />
+</RelativeLayout>
 
 
 

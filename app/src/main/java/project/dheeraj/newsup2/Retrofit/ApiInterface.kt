@@ -15,4 +15,5 @@ interface ApiInterface {
     fun getArticlesModel() : Call<ArticlesModel>
 
 
+
 }
