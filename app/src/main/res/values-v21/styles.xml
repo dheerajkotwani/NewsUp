@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="material_button" parent="Widget.MaterialComponents.Button">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#ffa</item>
+        <item name="colorPrimaryDark">#fff</item>
+        <item name="colorAccent">#fff</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="colorButtonNormal">#673AB7</item>
+        <item name="android:colorButtonNormal">#673AB7</item>
+    </style>
+</resources>

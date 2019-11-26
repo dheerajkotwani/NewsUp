@@ -6,4 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".Activities.LoginActivity">
 
+
+    <fragment
+        android:id="@+id/login_mobile_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="project.dheeraj.newsup2.Fragments.FragmentLoginMobile"/>
+
+    <fragment
+        android:id="@+id/login_otp_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="project.dheeraj.newsup2.Fragments.FragmentLoginOtp"/>
+    <include
+        android:visibility="gone"
+        layout="@layout/fragment_login_mobile"/>
+
+    <include
+        android:visibility="gone"
+        layout="@layout/fragment_login_otp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

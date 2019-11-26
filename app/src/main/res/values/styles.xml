@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:theme">@style/Theme.Design.Light.NoActionBar</item>
         <item name="android:fontFamily">@font/roboto</item>
+        <item name="colorButtonNormal">#673AB7</item>
+<!--        <item name="button">#673AB7</item>-->
+
     </style>
 
     <style name="fab_action" parent="Theme.AppCompat.Light.NoActionBar">
@@ -16,6 +19,16 @@
         <item name="colorPrimaryDark">#fff</item>
         <item name="colorAccent">#fff</item>
         <item name="android:fontFamily">@font/roboto</item>
+        <item name="colorButtonNormal">#673AB7</item>
     </style>
+<!--    <style name="material_button" parent="Widget.MaterialComponents.Button">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="colorPrimary">#ffa</item>-->
+<!--        <item name="colorPrimaryDark">#fff</item>-->
+<!--        <item name="colorAccent">#fff</item>-->
+<!--        <item name="android:fontFamily">@font/roboto</item>-->
+<!--        <item name="colorButtonNormal">#673AB7</item>-->
+<!--        <item name="android:colorButtonNormal">#673AB7</item>-->
+<!--    </style>-->
 
 </resources>

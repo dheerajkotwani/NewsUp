@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:src="@drawable/login_mobile"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OTP VERIFICATION"
+        android:layout_gravity="center"
+        android:fontFamily="@font/roboto"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"/>
+
+    <View
+        android:layout_height="10dp"
+        android:layout_width="0dp" />
+
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_login_mobile"
+        android:layout_gravity="center"
+        android:fontFamily="@font/roboto"
+        android:textSize="16dp"
+         android:textAlignment="center"
+        android:textColor="@android:color/black"/>
+
+    <View
+        android:layout_height="20dp"
+        android:layout_width="0dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Mobile Number"
+        android:layout_gravity="center"
+        android:fontFamily="@font/roboto"
+        android:textSize="14dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/darker_gray"/>
+
+    <EditText
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:maxLength="15"
+        android:paddingBottom="15dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@android:color/black"
+        android:text="+91-8604609572"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:textAlignment="center"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="30dp"/>
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#673AB7"
+        android:layout_gravity="center"
+        android:text="GET OTP"
+        android:textSize="16dp"
+        android:padding="5dp"
+        android:fontFamily="@font/roboto"
+        style="@style/fab_action"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:rippleColor="#9D7ED6"
+        android:shadowRadius="5"
+        android:shadowColor="#9D7ED6"/>
+
+
+
+
+
+
+</LinearLayout>
