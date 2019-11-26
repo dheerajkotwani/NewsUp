@@ -3,7 +3,6 @@ package project.dheeraj.newsup2.Activities
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import project.dheeraj.newsup2.Adapters.SuggestedTopicsRecyclerViewAdapter
 import project.dheeraj.newsup2.Adapters.TopStoriesHomeRecyclerViewAdapter
@@ -26,6 +26,7 @@ import project.dheeraj.newsup2.Model.SuggestedTopics
 import project.dheeraj.newsup2.R
 import project.dheeraj.newsup2.Retrofit.ApiInterface
 import project.dheeraj.newsup2.Retrofit.RetrofitClient
+import project.dheeraj.newsup2.Util.UtilMethods
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -208,60 +209,57 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
     }
 
+    override fun onBackPressed() {
+        if(layoutMain.visibility == View.VISIBLE) {
+            val snackbar =
+                Snackbar.make(layoutMain, "Are you sure you want to exit?", Snackbar.LENGTH_SHORT)
+                    .setAction("Yes", View.OnClickListener {
+                        finishAffinity()
+                    })
+            val sView = snackbar.view
+            sView.setBackgroundResource(android.R.color.holo_red_light)
+            snackbar.show()
+        }
+        else
+            super.onBackPressed()
+    }
+
     fun getCurrentTime(){
 
         val dateFormatter = SimpleDateFormat("hh a")
         dateFormatter.setLenient(false)
         val today = Date()
         val s = dateFormatter.format(today)
-//        Toast.makeText(this, s.subSequence(0,2), Toast.LENGTH_SHORT).show()
-//        Toast.makeText(this, s.subSequence(3,5), Toast.LENGTH_SHORT).show()
 
         val time = s.subSequence(0,2).toString().toInt()
         val timeDuration = s.subSequence(3, 5).toString()
 
         if ((time <4 || time == 12) && timeDuration.equals("PM")){
-//            Toast.makeText(this, "Good Afternoon!", Toast.LENGTH_SHORT).show()
             welcomeText.text = "Good Afternoon!"
         }
         else if (time in 5..8 && timeDuration.equals("PM")){
-//            Toast.makeText(this, "Good Evening!", Toast.LENGTH_SHORT).show()
             welcomeText.text = "Good Evening!"
         }
         else if (time in 9..11 && timeDuration.equals("PM")){
-//            Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show()
             welcomeText.text = "Welcome!"
         }
         else if ((time <4 || time == 12)  && timeDuration.equals("AM")){
-//            Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show()
             welcomeText.text = "Welcome!"
         }
         else if (time in 5..11 && timeDuration.equals("AM")){
-//            Toast.makeText(this, "Good Morning!", Toast.LENGTH_SHORT).show()
             welcomeText.text = "Good Morning!"
         }
 
     }
 
     fun getInternetState(){
-
-        val conMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        if (conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)!!.state == NetworkInfo.State.CONNECTED || conMgr.getNetworkInfo(
-                ConnectivityManager.TYPE_WIFI
-            )!!.state == NetworkInfo.State.CONNECTED
-        ) {
+        if(UtilMethods.isInternetAvailable(applicationContext)){
             layoutMain.visibility = View.VISIBLE
             dialogNoInternet.visibility = View.GONE
-
-
-        } else if (conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)!!.state == NetworkInfo.State.DISCONNECTED || conMgr.getNetworkInfo(
-                ConnectivityManager.TYPE_WIFI
-            )!!.state == NetworkInfo.State.DISCONNECTED
-        ) {
+        }
+        else{
             layoutMain.visibility = View.GONE
             dialogNoInternet.visibility = View.VISIBLE
-
         }
     }
 

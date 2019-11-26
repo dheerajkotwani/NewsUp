@@ -6,17 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".Activities.TopStoriesActivity">
 
-<!--    <include-->
-<!--        layout="@layout/layout_top_headlines"/>-->
-
-    <ImageView
-        android:id="@+id/gif_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+    <include
+        android:id="@+id/layout_top_headlines"
+        layout="@layout/layout_top_headlines"/>
 
 
     <include
+        android:id="@+id/dialog_no_internet"
+        android:visibility="gone"
         layout="@layout/dialog_no_internet"/>
 
     <ImageView

@@ -41,29 +41,25 @@
             android:layout_gravity="center"
             android:layout_marginLeft="4dp">
 
-            <TextView
-                android:id="@+id/title_top_headlines"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lines="4"
-                android:text="Parliament LIVE: RS Secretariat to Revisit Issue of Marshals' Uniform; Cong Protests Against Removal of Gandhis' SPG Cover in LS - News18"
-                android:textColor="@android:color/black"
-                android:fontFamily="@font/adamina"
-                android:textSize="14dp"/>
-
+            <ImageView
+                android:layout_height="25dp"
+                android:layout_width="180dp"
+                android:background="@color/colorPrimary"/>
             <View
                 android:layout_width="0dp"
-                android:layout_height="2dp"/>
+                android:layout_height="10dp"/>
+            <ImageView
+                android:layout_height="25dp"
+                android:layout_width="140dp"
+                android:background="@color/colorPrimary"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="10dp"/>
 
-            <TextView
-                android:id="@+id/date_top_headlines"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="Nov 19, 2019 | 04:32 am"
-                android:textColor="@android:color/darker_gray"
-                android:fontFamily="@font/roboto"
-                android:textSize="12dp"/>
+            <ImageView
+                android:layout_height="15dp"
+                android:layout_width="100dp"
+                android:background="@color/colorPrimary"/>
 
         </LinearLayout>
 

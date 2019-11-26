@@ -10,4 +10,7 @@
     <string name="bookmarkAdded">Added to Bookmarks</string>
     <string name="bookmarkRemoved">Removed from Bookmarks</string>
     <string name="share">Share</string>
+    <string name="default_time_format">yyyy-MM-dd\'T\'HH:mm:ss\'Z\'</string>
+    <string name="date_format">MMM d, yyyy</string>
+    <string name="time_format">HH:mm a</string>
 </resources>

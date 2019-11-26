@@ -10,17 +10,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.squareup.picasso.Picasso
+import project.dheeraj.newsup2.Activities.SingleNewsActivity
 import project.dheeraj.newsup2.Model.NewsHeadlines
 import project.dheeraj.newsup2.R
-import project.dheeraj.newsup2.Activities.SingleNewsActivity
+import project.dheeraj.newsup2.Util.UtilMethods.convertISOTime
 
-class TopStoriesHomeRecyclerViewAdapter(var context : Context, var newsheadlines : List<NewsHeadlines>) : RecyclerView.Adapter<TopStoriesHomeViewHolder>(){
+class HeadlinesRecyclerViewAdapter(var context : Context, var newsheadlines : List<NewsHeadlines>) : RecyclerView.Adapter<HeadlinesViewHolder>(){
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopStoriesHomeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeadlinesViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_round_top_headlines, parent, false)
-        val viewHolder : TopStoriesHomeViewHolder = TopStoriesHomeViewHolder(view)
+        val view = inflater.inflate(R.layout.item_top_headlines, parent, false)
+        val viewHolder : HeadlinesViewHolder = HeadlinesViewHolder(view)
         return viewHolder
     }
 
@@ -28,19 +29,16 @@ class TopStoriesHomeRecyclerViewAdapter(var context : Context, var newsheadlines
         return newsheadlines.size
     }
 
-    override fun onBindViewHolder(holder: TopStoriesHomeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HeadlinesViewHolder, position: Int) {
 
-        if (newsheadlines.get(position).name != null) {
-            holder.text.setText(newsheadlines.get(position).name)
-        }
-        else if (newsheadlines.get(position).author != null){
-            holder.text.setText(newsheadlines.get(position).author)
-        }
-        else if (newsheadlines.get(position).id != null){
-            holder.text.setText(newsheadlines.get(position).id)
-        }
-        else {
+        if (newsheadlines.get(position).title != null) {
             holder.text.setText(newsheadlines.get(position).title)
+        }
+        else if (newsheadlines.get(position).description != null){
+            holder.text.setText(newsheadlines.get(position).description)
+        }
+        else if (newsheadlines.get(position).content != null){
+            holder.text.setText(newsheadlines.get(position).content)
         }
 
         Picasso.get()
@@ -48,7 +46,7 @@ class TopStoriesHomeRecyclerViewAdapter(var context : Context, var newsheadlines
             .placeholder(R.drawable.index)
             .into(holder.image)
 
-        holder.image.setOnClickListener {
+        holder.item.setOnClickListener {
             val intent = Intent(context, SingleNewsActivity::class.java);
             intent.putExtra(context.getString(R.string.content), newsheadlines.get(position).content)
             intent.putExtra(context.getString(R.string.description), newsheadlines.get(position).description)
@@ -60,14 +58,18 @@ class TopStoriesHomeRecyclerViewAdapter(var context : Context, var newsheadlines
             context.startActivity(intent)
         }
 
+        holder.date.setText(convertISOTime(context, newsheadlines.get(position).publishedAt))
+
 
     }
 
 }
 
-class TopStoriesHomeViewHolder(itemView: View) : ViewHolder(itemView) {
+class HeadlinesViewHolder(itemView: View) : ViewHolder(itemView) {
 
-    val image : ImageView = itemView.findViewById(R.id.image_view_top_headlines_round)
-    val text : TextView = itemView.findViewById(R.id.text_view_top_headlines_round)
+    val image : ImageView = itemView.findViewById(R.id.image_top_headlines)
+    val text : TextView = itemView.findViewById(R.id.title_top_headlines)
+    val date : TextView = itemView.findViewById(R.id.date_top_headlines)
+    val item : View = itemView
 
 }

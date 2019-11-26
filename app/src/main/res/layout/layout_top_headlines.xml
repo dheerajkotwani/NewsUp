@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -19,27 +21,36 @@
         android:textColor="#1B1B1B"
         android:fontFamily="@font/playfair_display_black"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_margin="5dp"-->
+<!--        android:orientation="vertical">-->
 
-        <include
-            layout="@layout/item_top_headlines"/>
-        <include
-            layout="@layout/item_top_headlines"/>
-        <include
-            layout="@layout/item_top_headlines"/>
-        <include
-            layout="@layout/item_top_headlines"/>
-        <include
-            layout="@layout/item_top_headlines"/>
-        <include
-            layout="@layout/item_top_headlines"/>
+<!--        <include-->
+<!--            layout="@layout/item_top_headlines"/>-->
+<!--        <include-->
+<!--            layout="@layout/item_top_headlines"/>-->
+<!--        <include-->
+<!--            layout="@layout/item_top_headlines"/>-->
+<!--        <include-->
+<!--            layout="@layout/item_top_headlines"/>-->
+<!--        <include-->
+<!--            layout="@layout/item_top_headlines"/>-->
+<!--        <include-->
+<!--            layout="@layout/item_top_headlines"/>-->
+
+
+<!--    </LinearLayout>-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/headlines_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 
     </LinearLayout>
-    </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

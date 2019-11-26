@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<androidx.cardview.widget.CardView -->
-<!--    android:orientation="vertical" android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:background="#aaa">-->
 
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:background="#C1D0D1">-->
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

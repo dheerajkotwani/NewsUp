@@ -3,7 +3,6 @@ package project.dheeraj.newsup2.Activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,10 +12,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import project.dheeraj.newsup2.R
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
+import project.dheeraj.newsup2.Util.UtilMethods.convertISOTime
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class SingleNewsActivity : AppCompatActivity() {
 
     @SuppressLint("RestrictedApi")
@@ -36,12 +34,10 @@ class SingleNewsActivity : AppCompatActivity() {
         val fabBookmarkFilled = findViewById<FloatingActionButton>(R.id.news_full_fab_bookmark_filled)
         val fabShare = findViewById<FloatingActionButton>(R.id.news_full_fab_share)
 
-        title.setText(intent.getStringExtra(getString(R.string.title)))
-        description.setText(intent.getStringExtra(getString(R.string.description)))
-        content.setText(intent.getStringExtra(getString(R.string.content)))
-//        date.setText(intent.getStringExtra(getString(R.string.publishedAt)))
-        date.setText(convertISOTimeToDate(intent.getStringExtra(getString(R.string.publishedAt))))
-//        convertISOTimeToDate(intent.getStringExtra(getString(R.string.publishedAt)))
+        title.text = intent.getStringExtra(getString(R.string.title))
+        description.text = intent.getStringExtra(getString(R.string.description))
+        content.text = intent.getStringExtra(getString(R.string.content))
+        date.text = convertISOTime(applicationContext, intent.getStringExtra(getString(R.string.publishedAt)))
 
         Picasso.get()
             .load(intent.getStringExtra(getString(R.string.urlToImage)))
@@ -77,38 +73,6 @@ class SingleNewsActivity : AppCompatActivity() {
 
         }
 
-    }
-
-
-    fun convertISOTimeToDate(isoTime: String): String? {
-        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        var convertedDate: Date? = null
-        var formattedDate: String? = null
-        var formattedTime: String = "10:00 AM"
-        try {
-            convertedDate = sdf.parse(isoTime)
-            formattedDate = SimpleDateFormat("MMM d, yyyy").format(convertedDate)
-            formattedTime = SimpleDateFormat("HH:mm a").format(convertedDate)
-
-            if(formattedTime.subSequence(6,8).toString().equals("PM") && formattedTime.subSequence(0,2).toString().toInt()>12){
-                formattedTime = (formattedTime.subSequence(0,2).toString().toInt()-12).toString()+formattedTime.subSequence(2,8).toString()
-            }
-            if (formattedTime.subSequence(0,2).toString().equals("00")){
-                formattedTime = (formattedTime.subSequence(0,2).toString().toInt()+1).toString()+formattedTime.subSequence(2,8).toString()
-
-            }
-            if (formattedTime.subSequence(0,2).toString().equals("0:")){
-                formattedTime = (formattedTime.subSequence(0,1).toString().toInt()+1).toString()+formattedTime.subSequence(2,8).toString()
-
-            }
-
-
-            Log.d("Date ", formattedDate+" | "+formattedTime)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-            Log.e("Error Date ", e.message)
-        }
-        return formattedDate+" | "+formattedTime
     }
 
 }
