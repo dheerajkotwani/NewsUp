@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_page_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -19,29 +20,7 @@
         android:text="Top Headines"
         android:textSize="24dp"
         android:textColor="#1B1B1B"
-        android:fontFamily="@font/playfair_display_black"/>
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_margin="5dp"-->
-<!--        android:orientation="vertical">-->
-
-<!--        <include-->
-<!--            layout="@layout/item_top_headlines"/>-->
-<!--        <include-->
-<!--            layout="@layout/item_top_headlines"/>-->
-<!--        <include-->
-<!--            layout="@layout/item_top_headlines"/>-->
-<!--        <include-->
-<!--            layout="@layout/item_top_headlines"/>-->
-<!--        <include-->
-<!--            layout="@layout/item_top_headlines"/>-->
-<!--        <include-->
-<!--            layout="@layout/item_top_headlines"/>-->
-
-
-<!--    </LinearLayout>-->
+        android:fontFamily="@font/playfair_display_black" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/headlines_recycler_view"

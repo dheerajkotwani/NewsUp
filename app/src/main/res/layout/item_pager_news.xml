@@ -16,6 +16,7 @@
         android:outlineAmbientShadowColor="@android:color/holo_blue_dark">
 
         <ImageView
+            android:id="@+id/image_preference"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/dummy_news"
@@ -27,6 +28,7 @@
             android:background="@drawable/gradient_transparent_black"/>
 
         <TextView
+            android:id="@+id/text_preferences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewsUp 2</string>
+    <string name="app_name">NewsUp</string>
     <string name="content">content</string>
     <string name="description">description</string>
     <string name="author">author</string>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,8 @@ class TopStoriesActivity : AppCompatActivity() {
     lateinit var gifImage: ImageView
     lateinit var headlinesRecyclerView: RecyclerView
     lateinit var skeleton: Skeleton
+    lateinit var pageTitle: TextView
+    lateinit var title: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +44,17 @@ class TopStoriesActivity : AppCompatActivity() {
         dialogNoInternet = findViewById(R.id.dialog_no_internet)
         gifImage = findViewById(R.id.no_internet_image)
         headlinesRecyclerView = findViewById(R.id.headlines_recycler_view)
+        pageTitle = findViewById(R.id.tv_page_title)
 
         skeleton = headlinesRecyclerView.applySkeleton(project.dheeraj.newsup2.R.layout.shimmer_top_headlines, 10)
         skeleton.maskCornerRadius = 40F
         skeleton.shimmerDurationInMillis = 1500
         skeleton.showSkeleton()
+
+        if(intent.getStringExtra("name").isNotEmpty()){
+            pageTitle.text = intent.getStringExtra("name")
+            title = intent.getStringExtra("name")
+        }
 
 
         checkInternet()
@@ -83,7 +92,39 @@ class TopStoriesActivity : AppCompatActivity() {
             ApiInterface::class.java
         )
 
-        val call: Call<ArticlesModel> = apiInterface.getArticlesModel()
+        var call: Call<ArticlesModel> = apiInterface.getArticlesModel()
+
+        if(title == "Entertainment"){
+            call = apiInterface.getEntertainmaent()
+
+        }
+        else if(title == "Technology"){
+            call = apiInterface.getTechnology()
+
+        }
+        else if(title == "Business"){
+            call = apiInterface.getBusiness()
+
+        }
+        else if(title == "Sports"){
+            call = apiInterface.getSports()
+
+        }
+        else if(title == "Medical"){
+            call = apiInterface.getHealth()
+
+        }
+        else if(title == "Science"){
+            call = apiInterface.getScience()
+
+        }
+        else if(title == "International"){
+            call = apiInterface.getInternational()
+
+        }
+        else {
+            call = apiInterface.getArticlesModel()
+        }
         call.enqueue(object : Callback<ArticlesModel> {
             override fun onFailure(
                 call: Call<ArticlesModel>?,
@@ -103,7 +144,7 @@ class TopStoriesActivity : AppCompatActivity() {
 
                 if(response != null){
                     if(response.body() != null){
-                        for(i in 0 until response.body()!!.totalResults){
+                        for(i in 0 until response.body()!!.articles.size){
 
                             if ( response.body()!!.articles.get(i).urlToImage != null ){
 

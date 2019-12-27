@@ -25,7 +25,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
             // close this activity
             finish()
-        }, 2000)
+        }, 2500)
 
         val alphaAnimation = AlphaAnimation(0.2f,1.0f)
         val alphaAnimation2 = AlphaAnimation(0.0f,1.0f)

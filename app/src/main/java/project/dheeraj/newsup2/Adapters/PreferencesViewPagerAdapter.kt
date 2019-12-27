@@ -1,28 +1,65 @@
 package project.dheeraj.newsup2.Adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.smarteist.autoimageslider.SliderViewAdapter
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.viewpager.widget.PagerAdapter
+import com.squareup.picasso.Picasso
+import project.dheeraj.newsup2.Activities.SingleNewsActivity
+import project.dheeraj.newsup2.Model.NewsHeadlines
 import project.dheeraj.newsup2.R
 
-class IntroViewPagerAdapter (val context: Context): SliderViewAdapter<SliderViewHolder>() {
+class PreferencesViewPagerAdapter(var context: Context, var articleList: List<NewsHeadlines>): PagerAdapter() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?): SliderViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_intro_slider, parent, false)
-        return SliderViewHolder(view)
+
+
+
+
+    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+        return view == `object`
     }
 
     override fun getCount(): Int {
-        return 2
+        return articleList.size
     }
 
-    override fun onBindViewHolder(viewHolder: SliderViewHolder?, position: Int) {
+    override fun instantiateItem(container: ViewGroup, position: Int): Any {
+
+        val view = LayoutInflater.from(context).inflate(R.layout.item_pager_news, container, false)
+
+        val image = view.findViewById<ImageView>(R.id.image_preference)
+        val text = view.findViewById<TextView>(R.id.text_preferences)
+
+        Picasso.get()
+            .load(articleList.get(position).urlToImage)
+            .into(image)
+
+        text.text = articleList.get(position).title
+
+        view.setOnClickListener {
+            val intent = Intent(context, SingleNewsActivity::class.java);
+            intent.putExtra(context.getString(R.string.content), articleList.get(position).content)
+            intent.putExtra(context.getString(R.string.description), articleList.get(position).description)
+            intent.putExtra(context.getString(R.string.author), articleList.get(position).author)
+            intent.putExtra(context.getString(R.string.url), articleList.get(position).url)
+            intent.putExtra(context.getString(R.string.urlToImage), articleList.get(position).urlToImage)
+            intent.putExtra(context.getString(R.string.title), articleList.get(position).title)
+            intent.putExtra(context.getString(R.string.publishedAt), articleList.get(position).publishedAt)
+            context.startActivity(intent)
+        }
+
+        container.addView(view)
+        return view
     }
 
-}
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+//        super.destroyItem(container, position, `object`)
+        container.removeView(`object` as View?)
+    }
 
-class SliderViewHolder(itemView: View): SliderViewAdapter.ViewHolder(itemView) {
 
 }

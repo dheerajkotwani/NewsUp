@@ -1,5 +1,6 @@
 package project.dheeraj.newsup2.Util
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
@@ -45,7 +46,7 @@ object UtilMethods{
             formattedDate = SimpleDateFormat(context.getString(R.string.date_format)).format(convertedDate)
             formattedTime = SimpleDateFormat(context.getString(R.string.time_format)).format(convertedDate)
 
-            if(formattedTime.subSequence(6,8).toString().equals("PM") && formattedTime.subSequence(0,2).toString().toInt()>12){
+            if((formattedTime.subSequence(6,8).toString().equals("PM") || formattedTime.subSequence(6,8).toString().equals("pm")) && formattedTime.subSequence(0,2).toString().toInt()>12){
                 formattedTime = (formattedTime.subSequence(0,2).toString().toInt()-12).toString()+formattedTime.subSequence(2,8).toString()
             }
             if (formattedTime.subSequence(0,2).toString().equals("00")){
@@ -64,6 +65,18 @@ object UtilMethods{
             Log.e("Error Date ", e.message)
         }
         return formattedDate+" | "+formattedTime
+    }
+
+    fun showLoader(context: Context, title: String, message: String){
+
+        val dialog = ProgressDialog(context)
+        dialog.setTitle(title)
+        dialog.setMessage(message)
+        dialog.show()
+
+    }
+
+    fun DismissLoader(){
     }
 
 }

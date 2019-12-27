@@ -2,6 +2,8 @@ package project.dheeraj.newsup2.Activities
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Point
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
@@ -14,11 +16,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
+import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
+import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
+import project.dheeraj.newsup2.Adapters.PreferencesViewPagerAdapter
 import project.dheeraj.newsup2.Adapters.SuggestedTopicsRecyclerViewAdapter
 import project.dheeraj.newsup2.Adapters.TopStoriesHomeRecyclerViewAdapter
 import project.dheeraj.newsup2.Model.NewsHeadlines
@@ -38,48 +44,65 @@ import project.dheeraj.newsup2.Model.ArticlesModel as ArticlesModel1
 class MainActivity : AppCompatActivity() {
 
     lateinit var topStories: TextView
-    lateinit var topStoriesRecyclerView : RecyclerView
-    lateinit var suggestedTopicsRecyclerView : RecyclerView
+    lateinit var topStoriesRecyclerView: RecyclerView
+    lateinit var suggestedTopicsRecyclerView: RecyclerView
+    lateinit var preferencesViewPager: ViewPager
     lateinit var skeleton: Skeleton
     lateinit var homeSwipeRefreshLayout: SwipeRefreshLayout
     lateinit var firebaseAnalytics: FirebaseAnalytics
-    lateinit var welcomeText : TextView
-    lateinit var layoutMain : View
-    lateinit var dialogNoInternet : View
-    lateinit var buttonTryAgain : Button
+    lateinit var welcomeText: TextView
+    lateinit var layoutMain: View
+    lateinit var dialogNoInternet: View
+    lateinit var buttonTryAgain: Button
+    lateinit var apiInterface: ApiInterface
+    lateinit var mDuoDrawerToggle: DuoDrawerToggle
+    lateinit var mDuoDrawerLayout: DuoDrawerLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(project.dheeraj.newsup2.R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        val conMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
 
-        topStories = findViewById(project.dheeraj.newsup2.R.id.view_all_top_stories)
-        welcomeText = findViewById(project.dheeraj.newsup2.R.id.welcomeTextView)
+        topStories = findViewById(R.id.view_all_top_stories)
+        welcomeText = findViewById(R.id.welcomeTextView)
         layoutMain = findViewById(R.id.layout_main)
         dialogNoInternet = findViewById(R.id.dialog_no_internet)
         buttonTryAgain = findViewById(R.id.button_try_again)
+        preferencesViewPager = findViewById(R.id.home_view_pager)
+        apiInterface = RetrofitClient.getClient().create(ApiInterface::class.java)
+//        mDuoDrawerLayout = findViewById(R.id.drawer)
 
-        topStoriesRecyclerView = findViewById(project.dheeraj.newsup2.R.id.top_stories_recycler_view)
-        suggestedTopicsRecyclerView = findViewById(project.dheeraj.newsup2.R.id.suggested_topics_recycler_view)
-        homeSwipeRefreshLayout = findViewById(project.dheeraj.newsup2.R.id.home_swipe_refresh)
+        topStoriesRecyclerView =
+            findViewById(R.id.top_stories_recycler_view)
+        suggestedTopicsRecyclerView =
+            findViewById(R.id.suggested_topics_recycler_view)
+        homeSwipeRefreshLayout = findViewById(R.id.home_swipe_refresh)
 
-        skeleton = topStoriesRecyclerView.applySkeleton(project.dheeraj.newsup2.R.layout.shimmer_round_top_headlines, 5)
+        skeleton = topStoriesRecyclerView.applySkeleton(
+            R.layout.shimmer_round_top_headlines,
+            5
+        )
         skeleton.maskCornerRadius = 480F
         skeleton.shimmerDurationInMillis = 1500
         skeleton.showSkeleton()
 
-        val gifImage = findViewById<ImageView>(project.dheeraj.newsup2.R.id.no_internet_image)
+        val screenWidth = getScreenWidth()
+        preferencesViewPager.clipToPadding = false
+        preferencesViewPager.setPadding(0,0,220,0)
+
+        val gifImage = findViewById<ImageView>(R.id.no_internet_image)
 
         Glide.with(this)
-            .load(project.dheeraj.newsup2.R.drawable.no_internet_gif_2)
+            .load(R.drawable.no_internet_gif_2)
             .into(gifImage)
 
         topStories.setOnClickListener {
-            intent  = Intent(this, TopStoriesActivity::class.java)
+            intent = Intent(this, TopStoriesActivity::class.java)
+            intent.putExtra("name", "Top Headlines")
             startActivity(intent)
         }
 
@@ -89,16 +112,18 @@ class MainActivity : AppCompatActivity() {
             getNews()
         }
 
-
+//        handleDrawer()
         getInternetState()
         getCurrentTime()
         getTopics()
         getNews()
 
-        homeSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_dark,
+        homeSwipeRefreshLayout.setColorSchemeResources(
+            android.R.color.holo_blue_dark,
             android.R.color.holo_red_dark,
             android.R.color.holo_purple,
-            android.R.color.holo_green_dark)
+            android.R.color.holo_green_dark
+        )
 
         homeSwipeRefreshLayout.setOnRefreshListener {
             getCurrentTime()
@@ -113,23 +138,37 @@ class MainActivity : AppCompatActivity() {
 
         var suggestedTopics = mutableListOf<SuggestedTopics>()
 
-        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.business, "Business"))
-        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.entertainment, "Entertainment"))
-        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.sports, "Sports"))
-        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.science, "Science"))
-        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.technology, "Technology"))
-        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.medical, "Medical"))
-        suggestedTopics.add(SuggestedTopics(project.dheeraj.newsup2.R.drawable.international2, "International"))
+        suggestedTopics.add(
+            SuggestedTopics(
+                R.drawable.business,
+                "Business"
+            )
+        )
+        suggestedTopics.add(
+            SuggestedTopics(
+                R.drawable.entertainment,
+                "Entertainment"
+            )
+        )
+        suggestedTopics.add(SuggestedTopics(R.drawable.sports, "Sports"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.science, "Science"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.technology, "Technology"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.medical, "Medical"))
+        suggestedTopics.add(
+            SuggestedTopics(
+                R.drawable.international2,
+                "International"
+            )
+        )
 
         suggestedTopicsRecyclerView.layoutManager = GridLayoutManager(applicationContext, 3)
-        suggestedTopicsRecyclerView.adapter = SuggestedTopicsRecyclerViewAdapter(applicationContext, suggestedTopics)
+        suggestedTopicsRecyclerView.adapter =
+            SuggestedTopicsRecyclerViewAdapter(applicationContext, suggestedTopics)
     }
 
     private fun getNews() {
 
-        val apiInterface: ApiInterface = RetrofitClient.getClient().create(
-            ApiInterface::class.java
-        )
+        getPreferencedNews()
 
         val call: Call<ArticlesModel1> = apiInterface.getArticlesModel()
         call.enqueue(object : Callback<project.dheeraj.newsup2.Model.ArticlesModel> {
@@ -137,7 +176,7 @@ class MainActivity : AppCompatActivity() {
                 call: Call<project.dheeraj.newsup2.Model.ArticlesModel>?,
                 t: Throwable?
             ) {
-                Toast.makeText(applicationContext, "Error Loading Data",Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Error Loading Data", Toast.LENGTH_SHORT).show()
                 Log.e("Error", t?.message.toString())
                 homeSwipeRefreshLayout.isRefreshing = false
             }
@@ -149,11 +188,11 @@ class MainActivity : AppCompatActivity() {
 
                 var myNewsList = mutableListOf<NewsHeadlines>()
 
-                if(response != null){
-                    if(response.body() != null){
-                        for(i in 0 until response.body()!!.totalResults){
+                if (response != null) {
+                    if (response.body() != null) {
+                        for (i in 0 until response.body()!!.articles.size) {
 
-                            if ( response.body()!!.articles.get(i).urlToImage != null ){
+                            if (response.body()!!.articles.get(i).urlToImage != null) {
 
                                 myNewsList.add(
                                     NewsHeadlines(
@@ -187,7 +226,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                topStoriesRecyclerView.adapter = TopStoriesHomeRecyclerViewAdapter(applicationContext, myNewsList)
+                topStoriesRecyclerView.adapter =
+                    TopStoriesHomeRecyclerViewAdapter(applicationContext, myNewsList)
 
                 Log.d("Total Results: ", response?.body()?.totalResults.toString())
                 Log.d("List Items: ", myNewsList.size.toString())
@@ -195,6 +235,62 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    fun getPreferencedNews(){
+
+        val call: Call<ArticlesModel1> = apiInterface.getPreferences()
+        call.enqueue(object : Callback<project.dheeraj.newsup2.Model.ArticlesModel> {
+
+            override fun onFailure(
+                call: Call<project.dheeraj.newsup2.Model.ArticlesModel>,
+                t: Throwable
+            ) {
+            }
+
+            override fun onResponse(
+                call: Call<project.dheeraj.newsup2.Model.ArticlesModel>,
+                response: Response<project.dheeraj.newsup2.Model.ArticlesModel>
+            ) {
+
+                var prefList = mutableListOf<NewsHeadlines>()
+
+                if(response != null){
+                    if(response.body()!=null){
+
+                        for (i in 0 until response.body()!!.articles.size) {
+
+                            if (response.body()!!.articles.get(i).urlToImage != null) {
+
+                                prefList.add(
+                                    NewsHeadlines(
+                                        response.body()!!.articles.get(i).author,
+                                        response.body()!!.articles.get(i).source.id,
+                                        response.body()!!.articles.get(i).source.name,
+                                        response.body()!!.articles.get(i).title,
+                                        response.body()!!.articles.get(i).description,
+                                        response.body()!!.articles.get(i).url,
+                                        response.body()!!.articles.get(i).urlToImage,
+                                        response.body()!!.articles.get(i).publishedAt,
+                                        response.body()!!.articles.get(i).content
+                                    )
+                                )
+                            }
+                        }
+
+                        Log.d("Total Pref:", prefList.size.toString())
+
+                        preferencesViewPager.adapter =
+                            PreferencesViewPagerAdapter(applicationContext, prefList)
+                        val screenWidth: Int
+
+
+                    }
+                }
+
+            }
+        })
+
     }
 
     override fun onRestart() {
@@ -210,58 +306,73 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(layoutMain.visibility == View.VISIBLE) {
+        if (layoutMain.visibility == View.VISIBLE) {
             val snackbar =
                 Snackbar.make(layoutMain, "Are you sure you want to exit?", Snackbar.LENGTH_SHORT)
-                    .setAction("Yes", View.OnClickListener {
+                    .setAction("Yes") {
                         finishAffinity()
-                    })
-            val sView = snackbar.view
-            sView.setBackgroundResource(android.R.color.holo_red_light)
+                    }
+                    .setActionTextColor(Color.RED)
             snackbar.show()
-        }
-        else
+        } else
             super.onBackPressed()
     }
 
-    fun getCurrentTime(){
+    private fun getCurrentTime() {
 
         val dateFormatter = SimpleDateFormat("hh a")
-        dateFormatter.setLenient(false)
+        dateFormatter.isLenient = false
         val today = Date()
         val s = dateFormatter.format(today)
 
-        val time = s.subSequence(0,2).toString().toInt()
+        val time = s.subSequence(0, 2).toString().toInt()
         val timeDuration = s.subSequence(3, 5).toString()
 
-        if ((time <4 || time == 12) && timeDuration.equals("PM")){
+        if ((time < 4 || time == 12) && (timeDuration.equals("PM") || timeDuration.equals("pm"))) {
             welcomeText.text = "Good Afternoon!"
-        }
-        else if (time in 5..8 && timeDuration.equals("PM")){
+        } else if (time in 5..8 && (timeDuration.equals("PM") || timeDuration.equals("pm"))) {
             welcomeText.text = "Good Evening!"
-        }
-        else if (time in 9..11 && timeDuration.equals("PM")){
+        } else if (time in 9..11 && (timeDuration.equals("PM") || timeDuration.equals("pm"))) {
             welcomeText.text = "Welcome!"
-        }
-        else if ((time <4 || time == 12)  && timeDuration.equals("AM")){
+        } else if ((time < 4 || time == 12) && (timeDuration.equals("AM") || timeDuration.equals("am"))) {
             welcomeText.text = "Welcome!"
-        }
-        else if (time in 5..11 && timeDuration.equals("AM")){
+        } else if (time in 5..11 && (timeDuration.equals("AM") || timeDuration.equals("am"))) {
             welcomeText.text = "Good Morning!"
         }
 
     }
 
-    fun getInternetState(){
-        if(UtilMethods.isInternetAvailable(applicationContext)){
+    private fun getInternetState() {
+        if (UtilMethods.isInternetAvailable(applicationContext)) {
             layoutMain.visibility = View.VISIBLE
             dialogNoInternet.visibility = View.GONE
-        }
-        else{
+        } else {
             layoutMain.visibility = View.GONE
             dialogNoInternet.visibility = View.VISIBLE
         }
     }
 
+    private fun getScreenWidth(): Int{
+
+        val display = getWindowManager().getDefaultDisplay();
+        val size = Point();
+        display.getSize(size);
+        val width = size.x;
+        val height = size.y;
+        Log.e("Width", "" + width);
+        Log.e("height", "" + height);
+
+        return (width/3)*10
+    }
+
+    private fun handleDrawer() {
+        val duoDrawerToggle = DuoDrawerToggle(
+            this, mDuoDrawerLayout,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        mDuoDrawerLayout.setDrawerListener(duoDrawerToggle)
+        duoDrawerToggle.syncState()
+    }
 
 }

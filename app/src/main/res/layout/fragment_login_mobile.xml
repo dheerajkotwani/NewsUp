@@ -37,7 +37,7 @@
         android:textColor="@android:color/black"/>
 
     <View
-        android:layout_height="20dp"
+        android:layout_height="40dp"
         android:layout_width="0dp" />
 
     <TextView
@@ -50,42 +50,73 @@
         android:textAlignment="center"
         android:textColor="@android:color/darker_gray"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <EditText
+            android:id="@+id/et_country_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:maxLength="3"
+            android:paddingBottom="15dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@android:color/black"
+            android:text="+91"
+            android:focusedByDefault="false"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:editable="false"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:textAlignment="center"/>
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="30dp"/>
+
     <EditText
-        android:layout_width="220dp"
+        android:id="@+id/et_login_mobile"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:maxLength="15"
+        android:maxLength="10"
+        android:nextFocusDown="@id/button_get_otp"
+        android:focusable="true"
         android:paddingBottom="15dp"
         android:layout_marginTop="5dp"
         android:textColor="@android:color/black"
-        android:text="+91-8604609572"
+        android:text=""
+        android:imeOptions="actionDone"
+        android:inputType="number"
         android:textStyle="bold"
+        android:focusedByDefault="true"
         android:textSize="18dp"
         android:textAlignment="center"/>
+    </LinearLayout>
 
     <View
         android:layout_width="0dp"
         android:layout_height="30dp"/>
 
     <Button
+         android:id="@+id/button_get_otp"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#673AB7"
         android:layout_gravity="center"
         android:text="GET OTP"
         android:textSize="16dp"
+        android:background="@drawable/gradient_voilet_blue"
         android:padding="5dp"
         android:fontFamily="@font/roboto"
-        style="@style/fab_action"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        app:rippleColor="#9D7ED6"
-        android:shadowRadius="5"
-        android:shadowColor="#9D7ED6"/>
-
-
-
-
-
+        android:textAlignment="center"
+        app:rippleColor="#9D7ED6"/>
 
 </LinearLayout>

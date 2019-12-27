@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -25,7 +26,6 @@
 
 
     <LinearLayout
-        android:id="@+id/home_view_pager"
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:layout_marginTop="10dp"
@@ -33,15 +33,20 @@
         android:orientation="horizontal"
         android:layout_marginLeft="5dp">
 
-        <include
-            layout="@layout/item_pager_news"/>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/home_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-        <View
-            android:layout_width="5dp"
-            android:layout_height="0dp"/>
+<!--        <include-->
+<!--            layout="@layout/item_pager_news"/>-->
 
-        <include
-            layout="@layout/item_pager_news"/>
+<!--        <View-->
+<!--            android:layout_width="5dp"-->
+<!--            android:layout_height="0dp"/>-->
+
+<!--        <include-->
+<!--            layout="@layout/item_pager_news"/>-->
 
     </LinearLayout>
 

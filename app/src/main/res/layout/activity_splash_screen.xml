@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.SplashScreenActivity">
+    tools:context=".Activities.SplashScreenActivity"
+    android:background="@drawable/gradient_blue_shade">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,8 +15,8 @@
 
     <ImageView
         android:id="@+id/splash_logo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:src="@drawable/newsup_logo"
         android:layout_centerInParent="true"
         android:layout_gravity="center"/>
@@ -29,10 +30,11 @@
             android:id="@+id/splash_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NewsUp"
             android:layout_gravity="center"
-            android:textSize="30dp"
-            android:fontFamily="@font/adamina"/>
+            android:fontFamily="@font/roboto"
+            android:text="newsup"
+            android:textColor="@color/white"
+            android:textSize="34dp" />
     </LinearLayout>
 
 </RelativeLayout>
