@@ -76,6 +76,7 @@ class LoginActivity : AppCompatActivity() {
         if(firebaseAuth.currentUser != null){
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         buttonResendOTP.setOnClickListener {
@@ -244,9 +245,8 @@ class LoginActivity : AppCompatActivity() {
                 //     user action.
                 Log.d("Verification Complete", "onVerificationCompleted:$credential")
                 Log.d("Current User: ", firebaseAuth.currentUser?.phoneNumber.toString())
-//                val intent = Intent(this, MainActivity::class.java)
-//                startActivity(intent)
 
+                verificationComplete()
 
             }
 
@@ -292,7 +292,7 @@ class LoginActivity : AppCompatActivity() {
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
             mobileNumber, // Phone number to verify
-            120, // Timeout duration
+            200, // Timeout duration
             TimeUnit.SECONDS, // Unit of timeout
             this, // Activity (for callback binding)
             callbacks) // OnVerificationStateChangedCallbacks
@@ -310,6 +310,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("Success", "signInWithCredential:success")
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
+                    finish()
 
                     val user = task.result?.user
                     // ...
@@ -339,12 +340,23 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+
+
     fun showLoader(context: Context, title: String, message: String){
 
         dialog = ProgressDialog(context)
         dialog.setTitle(title)
         dialog.setMessage(message)
         dialog.show()
+
+    }
+
+    private fun verificationComplete(){
+
+        Toast.makeText(this, "User Verified", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
 
     }
 }

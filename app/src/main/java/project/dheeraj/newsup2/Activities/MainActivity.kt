@@ -315,7 +315,7 @@ class MainActivity : AppCompatActivity() {
                     .setActionTextColor(Color.RED)
             snackbar.show()
         } else
-            super.onBackPressed()
+            finish()
     }
 
     private fun getCurrentTime() {
