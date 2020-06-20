@@ -12,7 +12,7 @@ import project.dheeraj.newsup2.Activities.TopStoriesActivity
 import project.dheeraj.newsup2.Model.SuggestedTopics
 import project.dheeraj.newsup2.R
 
-class SuggestedTopicsRecyclerViewAdapter(val context : Context, val suggestedTopics : List<SuggestedTopics>)  : RecyclerView.Adapter<SuggestedTopicsViewHolder>(){
+class SuggestedTopicsRecyclerViewAdapter(val context : Context, val suggestedTopics : List<SuggestedTopics>)  : RecyclerView.Adapter<SuggestedTopicsRecyclerViewAdapter.SuggestedTopicsViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuggestedTopicsViewHolder {
 
@@ -45,11 +45,11 @@ class SuggestedTopicsRecyclerViewAdapter(val context : Context, val suggestedTop
         }
 
     }
-}
 
-class SuggestedTopicsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SuggestedTopicsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val image = itemView.findViewById<ImageView>(R.id.image)
-    val text = itemView.findViewById<TextView>(R.id.text)
+        val image = itemView.findViewById<ImageView>(R.id.image)
+        val text = itemView.findViewById<TextView>(R.id.text)
 
+    }
 }

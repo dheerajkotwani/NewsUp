@@ -1,12 +1,12 @@
 package project.dheeraj.newsup2.Activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.faltenreich.skeletonlayout.Skeleton
@@ -19,9 +19,8 @@ import project.dheeraj.newsup2.R
 import project.dheeraj.newsup2.Retrofit.ApiInterface
 import project.dheeraj.newsup2.Retrofit.RetrofitClient
 import project.dheeraj.newsup2.Util.UtilMethods
+import project.dheeraj.newsup2.ViewModel.TopStoriesViewModel
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class TopStoriesActivity : AppCompatActivity() {
 
@@ -32,13 +31,14 @@ class TopStoriesActivity : AppCompatActivity() {
     lateinit var skeleton: Skeleton
     lateinit var pageTitle: TextView
     lateinit var title: String
-
+    lateinit var viewModel: TopStoriesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_stories_activity)
 
         val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        viewModel = ViewModelProviders.of(this).get(TopStoriesViewModel::class.java)
 
         layoutNews = findViewById(R.id.layout_top_headlines)
         dialogNoInternet = findViewById(R.id.dialog_no_internet)
@@ -56,7 +56,7 @@ class TopStoriesActivity : AppCompatActivity() {
             title = intent.getStringExtra("name")
         }
 
-
+        observeNews()
         checkInternet()
         getNews()
 
@@ -94,100 +94,64 @@ class TopStoriesActivity : AppCompatActivity() {
 
         var call: Call<ArticlesModel> = apiInterface.getArticlesModel()
 
-        if(title == "Entertainment"){
-            call = apiInterface.getEntertainmaent()
+        when (title) {
+            "Entertainment" -> {
+                viewModel.getEntertainment()
 
-        }
-        else if(title == "Technology"){
-            call = apiInterface.getTechnology()
-
-        }
-        else if(title == "Business"){
-            call = apiInterface.getBusiness()
-
-        }
-        else if(title == "Sports"){
-            call = apiInterface.getSports()
-
-        }
-        else if(title == "Medical"){
-            call = apiInterface.getHealth()
-
-        }
-        else if(title == "Science"){
-            call = apiInterface.getScience()
-
-        }
-        else if(title == "International"){
-            call = apiInterface.getInternational()
-
-        }
-        else {
-            call = apiInterface.getArticlesModel()
-        }
-        call.enqueue(object : Callback<ArticlesModel> {
-            override fun onFailure(
-                call: Call<ArticlesModel>?,
-                t: Throwable?
-            ) {
-                Toast.makeText(applicationContext, "Error Loading Data", Toast.LENGTH_SHORT).show()
-                Log.e("Error", t?.message.toString())
-//                homeSwipeRefreshLayout.isRefreshing = false
             }
+            "Technology" -> {
+                viewModel.getTechnology()
+            }
+            "Business" -> {
+                viewModel.getBusiness()
 
-            override fun onResponse(
-                call: Call<ArticlesModel>?,
-                response: Response<ArticlesModel>?
-            ) {
+            }
+            "Sports" -> {
+                viewModel.getSports()
+            }
+            "Medical" -> {
+                viewModel.getMedical()
 
-                var myNewsList = mutableListOf<NewsHeadlines>()
+            }
+            "Science" -> {
+                viewModel.getScience()
 
-                if(response != null){
-                    if(response.body() != null){
-                        for(i in 0 until response.body()!!.articles.size){
+            }
+            "International" -> {
+                viewModel.getInternational()
 
-                            if ( response.body()!!.articles.get(i).urlToImage != null ){
+            }
+            else -> {
+                call = apiInterface.getArticlesModel()
+            }
+        }
+    }
 
-                                myNewsList.add(
-                                    NewsHeadlines(
-                                        response.body()!!.articles.get(i).author,
-                                        response.body()!!.articles.get(i).source.id,
-                                        response.body()!!.articles.get(i).source.name,
-                                        response.body()!!.articles.get(i).title,
-                                        response.body()!!.articles.get(i).description,
-                                        response.body()!!.articles.get(i).url,
-                                        response.body()!!.articles.get(i).urlToImage,
-                                        response.body()!!.articles.get(i).publishedAt,
-                                        response.body()!!.articles.get(i).content
-                                    )
-                                )
+    private fun observeNews() {
+        viewModel.liveData.observe(this, Observer {
 
-                                Log.d(
-                                    "Data $i",
-                                    (response.body()!!.articles.get(i).author +
-                                            response.body()!!.articles.get(i).title +
-                                            response.body()!!.articles.get(i).description +
-                                            response.body()!!.articles.get(i).url +
-                                            response.body()!!.articles.get(i).urlToImage +
-                                            response.body()!!.articles.get(i).publishedAt +
-                                            response.body()!!.articles.get(i).content)
-                                )
-                            }
+            var myNewsList = mutableListOf<NewsHeadlines>()
+            for (i in it.articles)
+            if (!i.urlToImage.isNullOrEmpty() ){
 
-//                            homeSwipeRefreshLayout.isRefreshing = false
-
-                        }
-                    }
-                }
-
-//                topStoriesRecyclerView.adapter = TopStoriesHomeRecyclerViewAdapter(applicationContext, myNewsList)
-                headlinesRecyclerView.adapter = HeadlinesRecyclerViewAdapter(applicationContext, myNewsList)
-
-                Log.d("Total Results: ", response?.body()?.totalResults.toString())
-                Log.d("List Items: ", myNewsList.size.toString())
+                myNewsList.add(
+                    NewsHeadlines(
+                        i.author,
+                        i.source.id,
+                        i.source.name,
+                        i.title,
+                        i.description,
+                        i.url,
+                        i.urlToImage,
+                        i.publishedAt,
+                        i.content
+                    )
+                )
 
             }
 
+
+            headlinesRecyclerView.adapter = HeadlinesRecyclerViewAdapter(applicationContext,myNewsList)
         })
     }
 }

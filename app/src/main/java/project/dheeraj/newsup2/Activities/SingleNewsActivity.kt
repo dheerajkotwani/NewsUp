@@ -8,9 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.squareup.picasso.Picasso
 import project.dheeraj.newsup2.R
 import project.dheeraj.newsup2.Util.UtilMethods.convertISOTime
 
@@ -35,11 +35,11 @@ class SingleNewsActivity : AppCompatActivity() {
         val fabShare = findViewById<FloatingActionButton>(R.id.news_full_fab_share)
 
         title.text = intent.getStringExtra(getString(R.string.title))
-        description.text = intent.getStringExtra(getString(R.string.description))
+        description.text = intent.getStringExtra(getString(R.string.description))!!.substringBeforeLast('[')
         content.text = intent.getStringExtra(getString(R.string.content))
         date.text = convertISOTime(applicationContext, intent.getStringExtra(getString(R.string.publishedAt)))
 
-        Picasso.get()
+        Glide.with(this)
             .load(intent.getStringExtra(getString(R.string.urlToImage)))
             .placeholder(R.drawable.index)
             .into(image)

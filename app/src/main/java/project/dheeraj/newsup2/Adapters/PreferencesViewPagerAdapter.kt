@@ -8,16 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import project.dheeraj.newsup2.Activities.SingleNewsActivity
 import project.dheeraj.newsup2.Model.NewsHeadlines
 import project.dheeraj.newsup2.R
 
 class PreferencesViewPagerAdapter(var context: Context, var articleList: List<NewsHeadlines>): PagerAdapter() {
-
-
-
-
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view == `object`
@@ -34,7 +30,7 @@ class PreferencesViewPagerAdapter(var context: Context, var articleList: List<Ne
         val image = view.findViewById<ImageView>(R.id.image_preference)
         val text = view.findViewById<TextView>(R.id.text_preferences)
 
-        Picasso.get()
+        Glide.with(context)
             .load(articleList.get(position).urlToImage)
             .into(image)
 

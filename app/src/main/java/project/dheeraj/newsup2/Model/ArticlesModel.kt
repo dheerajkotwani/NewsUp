@@ -1,6 +1,5 @@
 package project.dheeraj.newsup2.Model
 
-
 data class ArticlesModel (val status : String, val totalResults : Int, val articles: List<Articles>)
 
 data class Articles(val source : Source,

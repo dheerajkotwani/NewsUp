@@ -7,6 +7,7 @@ import android.view.animation.AlphaAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import project.dheeraj.newsup2.R
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -17,11 +18,15 @@ class SplashScreenActivity : AppCompatActivity() {
 
         val image = findViewById<ImageView>(R.id.splash_logo)
         val text = findViewById<TextView>(R.id.splash_text)
+        val firebaseAuth = FirebaseAuth.getInstance()
 
         Handler().postDelayed({
             // This method will be executed once the timer is over
             // Start your app main activity
-            startActivity(Intent(this, LoginActivity::class.java))
+            if (firebaseAuth.currentUser==null)
+                startActivity(Intent(this, LoginActivity::class.java))
+            else
+                startActivity(Intent(this, MainActivity::class.java))
 
             // close this activity
             finish()
@@ -36,7 +41,5 @@ class SplashScreenActivity : AppCompatActivity() {
         alphaAnimation2.startOffset = 1000
         alphaAnimation2.duration = 800
         text.animation = alphaAnimation2
-
-
     }
 }

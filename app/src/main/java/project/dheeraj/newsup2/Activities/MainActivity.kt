@@ -11,8 +11,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -22,8 +22,6 @@ import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
-import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 import project.dheeraj.newsup2.Adapters.PreferencesViewPagerAdapter
 import project.dheeraj.newsup2.Adapters.SuggestedTopicsRecyclerViewAdapter
 import project.dheeraj.newsup2.Adapters.TopStoriesHomeRecyclerViewAdapter
@@ -33,12 +31,9 @@ import project.dheeraj.newsup2.R
 import project.dheeraj.newsup2.Retrofit.ApiInterface
 import project.dheeraj.newsup2.Retrofit.RetrofitClient
 import project.dheeraj.newsup2.Util.UtilMethods
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import project.dheeraj.newsup2.ViewModel.TopStoriesViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import project.dheeraj.newsup2.Model.ArticlesModel as ArticlesModel1
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,8 +50,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var dialogNoInternet: View
     lateinit var buttonTryAgain: Button
     lateinit var apiInterface: ApiInterface
-    lateinit var mDuoDrawerToggle: DuoDrawerToggle
-    lateinit var mDuoDrawerLayout: DuoDrawerLayout
+    lateinit var viewModel: TopStoriesViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
+        viewModel = ViewModelProviders.of(this).get(TopStoriesViewModel::class.java)
 
         topStories = findViewById(R.id.view_all_top_stories)
         welcomeText = findViewById(R.id.welcomeTextView)
@@ -74,7 +68,6 @@ class MainActivity : AppCompatActivity() {
         buttonTryAgain = findViewById(R.id.button_try_again)
         preferencesViewPager = findViewById(R.id.home_view_pager)
         apiInterface = RetrofitClient.getClient().create(ApiInterface::class.java)
-//        mDuoDrawerLayout = findViewById(R.id.drawer)
 
         topStoriesRecyclerView =
             findViewById(R.id.top_stories_recycler_view)
@@ -109,14 +102,17 @@ class MainActivity : AppCompatActivity() {
         buttonTryAgain.setOnClickListener {
             getInternetState()
             getCurrentTime()
-            getNews()
+            observeNews()
         }
 
-//        handleDrawer()
         getInternetState()
         getCurrentTime()
         getTopics()
-        getNews()
+//        getNews()
+        observeNews()
+
+        viewModel.getTopHeadlines()
+        viewModel.getArticles()
 
         homeSwipeRefreshLayout.setColorSchemeResources(
             android.R.color.holo_blue_dark,
@@ -128,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         homeSwipeRefreshLayout.setOnRefreshListener {
             getCurrentTime()
             getInternetState()
-            getNews()
+            observeNews()
         }
 
 
@@ -164,133 +160,6 @@ class MainActivity : AppCompatActivity() {
         suggestedTopicsRecyclerView.layoutManager = GridLayoutManager(applicationContext, 3)
         suggestedTopicsRecyclerView.adapter =
             SuggestedTopicsRecyclerViewAdapter(applicationContext, suggestedTopics)
-    }
-
-    private fun getNews() {
-
-        getPreferencedNews()
-
-        val call: Call<ArticlesModel1> = apiInterface.getArticlesModel()
-        call.enqueue(object : Callback<project.dheeraj.newsup2.Model.ArticlesModel> {
-            override fun onFailure(
-                call: Call<project.dheeraj.newsup2.Model.ArticlesModel>?,
-                t: Throwable?
-            ) {
-                Toast.makeText(applicationContext, "Error Loading Data", Toast.LENGTH_SHORT).show()
-                Log.e("Error", t?.message.toString())
-                homeSwipeRefreshLayout.isRefreshing = false
-            }
-
-            override fun onResponse(
-                call: Call<project.dheeraj.newsup2.Model.ArticlesModel>?,
-                response: Response<project.dheeraj.newsup2.Model.ArticlesModel>?
-            ) {
-
-                var myNewsList = mutableListOf<NewsHeadlines>()
-
-                if (response != null) {
-                    if (response.body() != null) {
-                        for (i in 0 until response.body()!!.articles.size) {
-
-                            if (response.body()!!.articles.get(i).urlToImage != null) {
-
-                                myNewsList.add(
-                                    NewsHeadlines(
-                                        response.body()!!.articles.get(i).author,
-                                        response.body()!!.articles.get(i).source.id,
-                                        response.body()!!.articles.get(i).source.name,
-                                        response.body()!!.articles.get(i).title,
-                                        response.body()!!.articles.get(i).description,
-                                        response.body()!!.articles.get(i).url,
-                                        response.body()!!.articles.get(i).urlToImage,
-                                        response.body()!!.articles.get(i).publishedAt,
-                                        response.body()!!.articles.get(i).content
-                                    )
-                                )
-
-                                Log.d(
-                                    "Data $i",
-                                    (response.body()!!.articles.get(i).author +
-                                            response.body()!!.articles.get(i).title +
-                                            response.body()!!.articles.get(i).description +
-                                            response.body()!!.articles.get(i).url +
-                                            response.body()!!.articles.get(i).urlToImage +
-                                            response.body()!!.articles.get(i).publishedAt +
-                                            response.body()!!.articles.get(i).content)
-                                )
-                            }
-
-                            homeSwipeRefreshLayout.isRefreshing = false
-
-                        }
-                    }
-                }
-
-                topStoriesRecyclerView.adapter =
-                    TopStoriesHomeRecyclerViewAdapter(applicationContext, myNewsList)
-
-                Log.d("Total Results: ", response?.body()?.totalResults.toString())
-                Log.d("List Items: ", myNewsList.size.toString())
-
-            }
-
-        })
-    }
-
-    fun getPreferencedNews(){
-
-        val call: Call<ArticlesModel1> = apiInterface.getPreferences()
-        call.enqueue(object : Callback<project.dheeraj.newsup2.Model.ArticlesModel> {
-
-            override fun onFailure(
-                call: Call<project.dheeraj.newsup2.Model.ArticlesModel>,
-                t: Throwable
-            ) {
-            }
-
-            override fun onResponse(
-                call: Call<project.dheeraj.newsup2.Model.ArticlesModel>,
-                response: Response<project.dheeraj.newsup2.Model.ArticlesModel>
-            ) {
-
-                var prefList = mutableListOf<NewsHeadlines>()
-
-                if(response != null){
-                    if(response.body()!=null){
-
-                        for (i in 0 until response.body()!!.articles.size) {
-
-                            if (response.body()!!.articles.get(i).urlToImage != null) {
-
-                                prefList.add(
-                                    NewsHeadlines(
-                                        response.body()!!.articles.get(i).author,
-                                        response.body()!!.articles.get(i).source.id,
-                                        response.body()!!.articles.get(i).source.name,
-                                        response.body()!!.articles.get(i).title,
-                                        response.body()!!.articles.get(i).description,
-                                        response.body()!!.articles.get(i).url,
-                                        response.body()!!.articles.get(i).urlToImage,
-                                        response.body()!!.articles.get(i).publishedAt,
-                                        response.body()!!.articles.get(i).content
-                                    )
-                                )
-                            }
-                        }
-
-                        Log.d("Total Pref:", prefList.size.toString())
-
-                        preferencesViewPager.adapter =
-                            PreferencesViewPagerAdapter(applicationContext, prefList)
-                        val screenWidth: Int
-
-
-                    }
-                }
-
-            }
-        })
-
     }
 
     override fun onRestart() {
@@ -330,9 +199,9 @@ class MainActivity : AppCompatActivity() {
 
         if ((time < 4 || time == 12) && (timeDuration.equals("PM") || timeDuration.equals("pm"))) {
             welcomeText.text = "Good Afternoon!"
-        } else if (time in 5..8 && (timeDuration.equals("PM") || timeDuration.equals("pm"))) {
+        } else if (time in 5..8 && (timeDuration == "PM" || timeDuration.equals("pm"))) {
             welcomeText.text = "Good Evening!"
-        } else if (time in 9..11 && (timeDuration.equals("PM") || timeDuration.equals("pm"))) {
+        } else if (time in 9..11 && (timeDuration == "PM" || timeDuration.equals("pm"))) {
             welcomeText.text = "Welcome!"
         } else if ((time < 4 || time == 12) && (timeDuration.equals("AM") || timeDuration.equals("am"))) {
             welcomeText.text = "Welcome!"
@@ -365,14 +234,74 @@ class MainActivity : AppCompatActivity() {
         return (width/3)*10
     }
 
-    private fun handleDrawer() {
-        val duoDrawerToggle = DuoDrawerToggle(
-            this, mDuoDrawerLayout,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
-        mDuoDrawerLayout.setDrawerListener(duoDrawerToggle)
-        duoDrawerToggle.syncState()
+    private fun observeNews() {
+
+        viewModel.topliveData.observe(this, androidx.lifecycle.Observer {
+            var myNewsList = mutableListOf<NewsHeadlines>()
+
+                    for (i in it.articles) {
+
+                        if (i.urlToImage != null) {
+
+                            myNewsList.add(
+                                NewsHeadlines(
+                                    i.author,
+                                    i.source.id,
+                                    i.source.name,
+                                    i.title,
+                                    i.description,
+                                    i.url,
+                                    i.urlToImage,
+                                    i.publishedAt,
+                                    i.content
+                                )
+                            )
+                        }
+
+                        homeSwipeRefreshLayout.isRefreshing = false
+
+            }
+
+            topStoriesRecyclerView.adapter =
+                TopStoriesHomeRecyclerViewAdapter(applicationContext, myNewsList)
+
+            Log.d("List Items: ", myNewsList.size.toString())
+
+        })
+
+        viewModel.liveData.observe(this, androidx.lifecycle.Observer {
+            var prefList = mutableListOf<NewsHeadlines>()
+
+            for (i in it.articles) {
+
+                if (i.urlToImage != null) {
+
+                    prefList.add(
+                        NewsHeadlines(
+                            i.author,
+                            i.source.id,
+                            i.source.name,
+                            i.title,
+                            i.description,
+                            i.url,
+                            i.urlToImage,
+                            i.publishedAt,
+                            i.content
+                        )
+                    )
+                }
+
+                homeSwipeRefreshLayout.isRefreshing = false
+
+            }
+
+            preferencesViewPager.adapter =
+                PreferencesViewPagerAdapter(applicationContext, prefList)
+
+            Log.d("List Items: ", prefList.size.toString())
+
+        })
+
     }
 
 }

@@ -16,4 +16,7 @@
     <string name="text_login_mobile">We will send you an <b>One Time Password</b>\non this mobile number</string>
     <string name="login_otp_text">Enter the OTP sent to <b>+91-8604609572</b></string>
     <string name="verify_proceed"><![CDATA[VERIFY & PROCEED]]></string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

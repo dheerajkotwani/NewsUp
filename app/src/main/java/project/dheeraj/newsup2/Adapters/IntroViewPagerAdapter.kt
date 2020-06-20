@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.smarteist.autoimageslider.SliderViewAdapter
 import project.dheeraj.newsup2.R
 
-class IntroViewPagerAdapter (val context: Context): SliderViewAdapter<SliderViewHolder>() {
+class IntroViewPagerAdapter (val context: Context): SliderViewAdapter<IntroViewPagerAdapter.SliderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?): SliderViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_intro_slider, parent, false)
@@ -21,8 +21,9 @@ class IntroViewPagerAdapter (val context: Context): SliderViewAdapter<SliderView
     override fun onBindViewHolder(viewHolder: SliderViewHolder?, position: Int) {
     }
 
-}
 
-class SliderViewHolder(itemView: View): SliderViewAdapter.ViewHolder(itemView) {
+    class SliderViewHolder(itemView: View): SliderViewAdapter.ViewHolder(itemView) {
+
+    }
 
 }

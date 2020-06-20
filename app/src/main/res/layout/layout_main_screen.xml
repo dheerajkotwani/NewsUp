@@ -1,136 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <TextView
-        android:id="@+id/welcomeTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/playfair_display_black"
-        android:text="Good Morning!"
-        android:textColor="#1B1B1B"
-        android:textSize="22dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:layout_marginTop="10dp"
-        android:scrollbars="horizontal"
-        android:orientation="horizontal"
-        android:layout_marginLeft="5dp">
+        android:layout_height="match_parent">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/home_view_pager"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-<!--        <include-->
-<!--            layout="@layout/item_pager_news"/>-->
-
-<!--        <View-->
-<!--            android:layout_width="5dp"-->
-<!--            android:layout_height="0dp"/>-->
-
-<!--        <include-->
-<!--            layout="@layout/item_pager_news"/>-->
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp">
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Top Stories"
-        android:textSize="16dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:textColor="#2C2C2C"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="16dp"
+            android:paddingStart="16dp">
 
         <TextView
-            android:id="@+id/view_all_top_stories"
+            android:id="@+id/welcomeTextView"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/playfair_display_black"
+            android:text="Good Morning!"
+            android:textColor="#1B1B1B"
+            android:textSize="22dp"
+            android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_collections_bookmark_black_24dp"
+                android:padding="4dp"
+                android:tint="@color/grey_800"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_marginTop="10dp"
+            android:scrollbars="horizontal"
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/home_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Top Stories"
+                android:textSize="16dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:textColor="#2C2C2C"/>
+
+            <TextView
+                android:id="@+id/view_all_top_stories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View All"
+                android:textSize="14dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginRight="10dp"
+                android:textColor="#001AFF"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="2dp"
+            android:background="#2C2C2C"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/top_stories_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:itemCount="10"
+                tools:listitem="@layout/item_round_top_headlines"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="View All"
-            android:textSize="14dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginRight="10dp"
-            android:textColor="#001AFF"/>
+            android:text="Suggested Topics"
+            android:textColor="#2C2C2C"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="16dp"/>
 
-    </LinearLayout>
-
-    <View
-        android:layout_width="20dp"
-        android:layout_height="2dp"
-        android:background="#2C2C2C"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="4dp"/>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="110dp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp">
+        <View
+            android:layout_width="20dp"
+            android:layout_height="2dp"
+            android:background="#2C2C2C"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/top_stories_recycler_view"
+            android:id="@+id/suggested_topics_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            tools:itemCount="7"
+            tools:listitem="@layout/item_category_news"
+            style="@style/fab_action"
+            />
+
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Suggested Topics"
-        android:textColor="#2C2C2C"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="16dp"/>
-
-    <View
-        android:layout_width="20dp"
-        android:layout_height="2dp"
-        android:background="#2C2C2C"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="4dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/suggested_topics_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="3"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        style="@style/fab_action"
-        />
-
-
-</LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

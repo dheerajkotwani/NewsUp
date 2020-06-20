@@ -64,7 +64,7 @@ object UtilMethods{
             e.printStackTrace()
             Log.e("Error Date ", e.message)
         }
-        return formattedDate+" | "+formattedTime
+        return "$formattedDate | $formattedTime"
     }
 
     fun showLoader(context: Context, title: String, message: String){

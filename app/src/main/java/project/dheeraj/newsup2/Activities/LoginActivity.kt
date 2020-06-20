@@ -246,6 +246,8 @@ class LoginActivity : AppCompatActivity() {
                 Log.d("Verification Complete", "onVerificationCompleted:$credential")
                 Log.d("Current User: ", firebaseAuth.currentUser?.phoneNumber.toString())
 
+
+
                 verificationComplete()
 
             }
@@ -292,7 +294,7 @@ class LoginActivity : AppCompatActivity() {
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
             mobileNumber, // Phone number to verify
-            200, // Timeout duration
+            120, // Timeout duration
             TimeUnit.SECONDS, // Unit of timeout
             this, // Activity (for callback binding)
             callbacks) // OnVerificationStateChangedCallbacks

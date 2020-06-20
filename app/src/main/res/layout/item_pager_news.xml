@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
     
     <androidx.cardview.widget.CardView
-        android:layout_width="240dp"
+        android:layout_width="260dp"
         android:layout_height="160dp"
         android:elevation="10dp"
         app:cardElevation="5dp"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="8dp"
-            android:fontFamily="@font/adamina"
+            android:fontFamily="@font/roboto"
             android:maxLines="2"
             android:text="NewsUp is platform where you can get all the latest news."
             android:textColor="@android:color/white"
