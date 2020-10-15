@@ -27,7 +27,7 @@
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.SingleNewsActivity" />
         <activity android:name=".Activities.TopStoriesActivity" />
-        <activity android:name=".Activities.MainActivity"></activity>
+        <activity android:name=".Activities.MainActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"

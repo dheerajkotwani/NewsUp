@@ -136,23 +136,22 @@ class MainActivity : AppCompatActivity() {
 
         suggestedTopics.add(
             SuggestedTopics(
-                R.drawable.business,
+                R.drawable.ic_undraw_finance_0bdk,
                 "Business"
             )
         )
-        suggestedTopics.add(
-            SuggestedTopics(
-                R.drawable.entertainment,
+        suggestedTopics.add(            SuggestedTopics(
+                R.drawable.ic_undraw_compose_music_ovo2,
                 "Entertainment"
             )
         )
-        suggestedTopics.add(SuggestedTopics(R.drawable.sports, "Sports"))
-        suggestedTopics.add(SuggestedTopics(R.drawable.science, "Science"))
-        suggestedTopics.add(SuggestedTopics(R.drawable.technology, "Technology"))
-        suggestedTopics.add(SuggestedTopics(R.drawable.medical, "Medical"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.ic_undraw_game_day_ucx9, "Sports"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.ic_undraw_science_fqhl, "Science"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.ic_undraw_virtual_reality_y5ig, "Technology"))
+        suggestedTopics.add(SuggestedTopics(R.drawable.ic_undraw_medicine_b1ol, "Medical"))
         suggestedTopics.add(
             SuggestedTopics(
-                R.drawable.international2,
+                R.drawable.ic_undraw_travel_together_re_kjf2,
                 "International"
             )
         )

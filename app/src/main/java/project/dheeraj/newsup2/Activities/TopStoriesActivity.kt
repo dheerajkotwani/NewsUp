@@ -72,7 +72,7 @@ class TopStoriesActivity : AppCompatActivity() {
         super.onResume()
     }
 
-    fun checkInternet(){
+    private fun checkInternet(){
         if(!UtilMethods.isInternetAvailable(applicationContext)){
             layoutNews.visibility= View.GONE
             dialogNoInternet.visibility= View.VISIBLE
@@ -122,7 +122,7 @@ class TopStoriesActivity : AppCompatActivity() {
 
             }
             else -> {
-                call = apiInterface.getArticlesModel()
+                viewModel.getArticles()
             }
         }
     }

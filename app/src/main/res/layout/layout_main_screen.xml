@@ -70,9 +70,10 @@
                 android:layout_height="wrap_content"
                 android:text="Top Stories"
                 android:textSize="16dp"
+                android:fontFamily="@font/roboto_medium"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-                android:textColor="#2C2C2C"/>
+                android:textColor="@color/grey_700"/>
 
             <TextView
                 android:id="@+id/view_all_top_stories"
@@ -82,15 +83,16 @@
                 android:textSize="14dp"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:fontFamily="@font/roboto_medium"
                 android:layout_marginRight="10dp"
                 android:textColor="#001AFF"/>
 
         </LinearLayout>
 
         <View
-            android:layout_width="20dp"
+            android:layout_width="30dp"
             android:layout_height="2dp"
-            android:background="#2C2C2C"
+            android:background="@drawable/text_line"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="4dp"/>
 
@@ -116,18 +118,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Suggested Topics"
-            android:textColor="#2C2C2C"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:textSize="16dp"/>
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Suggested Topics"
+            android:textColor="@color/grey_700"
+            android:textSize="16dp" />
 
         <View
-            android:layout_width="20dp"
+            android:layout_width="30dp"
             android:layout_height="2dp"
-            android:background="#2C2C2C"
+            android:background="@drawable/text_line"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="3dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/suggested_topics_recycler_view"

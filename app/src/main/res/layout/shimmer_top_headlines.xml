@@ -38,27 +38,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_gravity="center"
+            android:layout_gravity="start|top"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="4dp">
 
             <ImageView
-                android:layout_height="25dp"
+                android:layout_height="22dp"
                 android:layout_width="180dp"
                 android:background="@color/colorPrimary"/>
             <View
                 android:layout_width="0dp"
-                android:layout_height="10dp"/>
+                android:layout_height="16dp"/>
             <ImageView
-                android:layout_height="25dp"
+                android:layout_height="18dp"
                 android:layout_width="140dp"
-                android:background="@color/colorPrimary"/>
-            <View
-                android:layout_width="0dp"
-                android:layout_height="10dp"/>
-
-            <ImageView
-                android:layout_height="15dp"
-                android:layout_width="100dp"
                 android:background="@color/colorPrimary"/>
 
         </LinearLayout>

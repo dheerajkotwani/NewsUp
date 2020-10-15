@@ -24,7 +24,7 @@ class SplashScreenActivity : AppCompatActivity() {
             // This method will be executed once the timer is over
             // Start your app main activity
             if (firebaseAuth.currentUser==null)
-                startActivity(Intent(this, LoginActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
             else
                 startActivity(Intent(this, MainActivity::class.java))
 
