@@ -1,5 +1,6 @@
 package project.dheeraj.newsup2.Activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -20,13 +21,16 @@ class SplashScreenActivity : AppCompatActivity() {
         val text = findViewById<TextView>(R.id.splash_text)
         val firebaseAuth = FirebaseAuth.getInstance()
 
+        val sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+        val loginStatus = sharedPreferences.getBoolean("loginStatus", false)
+
         Handler().postDelayed({
             // This method will be executed once the timer is over
             // Start your app main activity
-            if (firebaseAuth.currentUser==null)
+            if (firebaseAuth.currentUser!=null || loginStatus)
                 startActivity(Intent(this, MainActivity::class.java))
             else
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
 
             // close this activity
             finish()

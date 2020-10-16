@@ -3,6 +3,7 @@ package project.dheeraj.newsup2.Activities
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.core.text.bold
 import androidx.core.widget.addTextChangedListener
 import com.google.firebase.FirebaseException
@@ -47,11 +49,14 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mobileNumber: String
     private var storedVerificationId: String? = null
     private lateinit var dialog: ProgressDialog
+    private lateinit var sharedPreferences: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
 
         firebaseAuth = FirebaseAuth.getInstance()
         fragmentLoginMobile = findViewById(R.id.login_mobile_fragment)
@@ -311,6 +316,11 @@ class LoginActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("Success", "signInWithCredential:success")
                     val intent = Intent(this, MainActivity::class.java)
+
+                    sharedPreferences.edit()
+                        .putBoolean("loginStatus", true)
+                        .apply()
+
                     startActivity(intent)
                     finish()
 
@@ -356,6 +366,10 @@ class LoginActivity : AppCompatActivity() {
     private fun verificationComplete(){
 
         Toast.makeText(this, "User Verified", Toast.LENGTH_SHORT).show()
+        sharedPreferences.edit()
+            .putBoolean("loginStatus", true)
+            .apply()
+
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()

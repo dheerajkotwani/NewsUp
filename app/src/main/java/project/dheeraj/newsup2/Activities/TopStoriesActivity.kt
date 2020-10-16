@@ -20,6 +20,8 @@ import project.dheeraj.newsup2.Retrofit.ApiInterface
 import project.dheeraj.newsup2.Retrofit.RetrofitClient
 import project.dheeraj.newsup2.Util.UtilMethods
 import project.dheeraj.newsup2.ViewModel.TopStoriesViewModel
+import project.dheeraj.newsup2.db.BookmarkDatabase
+import project.dheeraj.newsup2.db.BookmarkModel
 import retrofit2.Call
 
 class TopStoriesActivity : AppCompatActivity() {
@@ -119,6 +121,36 @@ class TopStoriesActivity : AppCompatActivity() {
             }
             "International" -> {
                 viewModel.getInternational()
+
+            }
+            "Bookmarks" -> {
+
+                BookmarkDatabase(this).bookmarkDao().getBookmarks().observe(this, Observer {
+
+                    var myNewsList = mutableListOf<NewsHeadlines>()
+                    for (i in it)
+                        if (!i.urlToImage.isNullOrEmpty() ){
+
+                            myNewsList.add(
+                                NewsHeadlines(
+                                    i.author,
+                                    i.id.toString(),
+                                    i.name,
+                                    i.title,
+                                    i.description,
+                                    i.url,
+                                    i.urlToImage,
+                                    i.publishedAt,
+                                    i.content
+                                )
+                            )
+
+                        }
+
+                    myNewsList.reverse()
+
+                    headlinesRecyclerView.adapter = HeadlinesRecyclerViewAdapter(applicationContext,myNewsList)
+                })
 
             }
             else -> {

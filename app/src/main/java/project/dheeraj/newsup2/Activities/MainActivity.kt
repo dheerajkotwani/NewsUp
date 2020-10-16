@@ -22,6 +22,7 @@ import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
+import kotlinx.android.synthetic.main.layout_main_screen.*
 import project.dheeraj.newsup2.Adapters.PreferencesViewPagerAdapter
 import project.dheeraj.newsup2.Adapters.SuggestedTopicsRecyclerViewAdapter
 import project.dheeraj.newsup2.Adapters.TopStoriesHomeRecyclerViewAdapter
@@ -125,6 +126,14 @@ class MainActivity : AppCompatActivity() {
             getCurrentTime()
             getInternetState()
             observeNews()
+        }
+
+        viewBookmarks.setOnClickListener {
+
+            val intent = Intent (this, TopStoriesActivity::class.java)
+            intent.putExtra("name", "Bookmarks")
+            startActivity(intent)
+            
         }
 
 

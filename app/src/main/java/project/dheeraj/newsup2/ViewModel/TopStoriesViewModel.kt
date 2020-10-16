@@ -1,5 +1,6 @@
 package project.dheeraj.newsup2.ViewModel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,7 @@ import kotlinx.coroutines.launch
 import project.dheeraj.newsup2.Model.ArticlesModel
 import project.dheeraj.newsup2.NetworkRepository
 import project.dheeraj.newsup2.Retrofit.ApiInterface
+import project.dheeraj.newsup2.db.BookmarkDatabase
 
 class TopStoriesViewModel: ViewModel() {
 
@@ -142,6 +144,19 @@ class TopStoriesViewModel: ViewModel() {
             }
         }
     }
+
+//    fun getBookmarks (context: Context) {
+//        viewModelScope.launch(Dispatchers.Main) {
+//            try {
+//                mutableLiveData.postValue(
+//                    BookmarkDatabase(context).bookmarkDao().getBookmarks()
+//                )
+//            }
+//            catch (e: Exception) {
+//                Log.e("Get Feeds", e.message)
+//            }
+//        }
+//    }
 
 
 

@@ -30,6 +30,7 @@
             android:layout_gravity="center"/>
 
             <ImageView
+                android:id="@+id/viewBookmarks"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:src="@drawable/ic_collections_bookmark_black_24dp"

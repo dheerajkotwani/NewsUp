@@ -47,69 +47,120 @@
         android:elevation="15dp"
         app:cardElevation="15dp">
 
-
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="35dp"
-            android:layout_marginBottom="10dp">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="10dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/news_full_headline_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="15dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="Heading :"
+                        android:textColor="@android:color/black"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/news_full_date_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="15dp"
+                        android:fontFamily="@font/roboto"
+                        android:text="Date"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/news_full_description_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="15dp"
+                        android:fontFamily="@font/roboto"
+                        android:text="Description"
+                        android:textColor="#4B4B4B"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/news_full_content_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="15dp"
+                        android:fontFamily="@font/roboto"
+                        android:text="Content"
+                        android:textColor="#4B4B4B"
+                        android:textSize="14dp"
+                        android:maxLength="260" />
+
+                </LinearLayout>
+            </ScrollView>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fullNews"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true">
+
+                <ImageView
+                    android:id="@+id/bottomImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:alpha="0.3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/parliament1"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:alpha="0.6"
+                    android:background="@color/blue_grey_600"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:scaleType="centerCrop" />
 
                 <TextView
-                    android:id="@+id/news_full_headline_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="15dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="Heading :"
-                    android:textColor="@android:color/black"
-                    android:textSize="18dp" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:textSize="14dp"
+                    android:text="Click to read Full news"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto"/>
 
-                <TextView
-                    android:id="@+id/news_full_date_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="15dp"
-                    android:fontFamily="@font/roboto"
-                    android:text="Date"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="14dp" />
 
-                <TextView
-                    android:id="@+id/news_full_description_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:fontFamily="@font/roboto"
-                    android:text="Description"
-                    android:textColor="#4B4B4B"
-                    android:textSize="16dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/news_full_content_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:fontFamily="@font/roboto"
-                    android:text="Content"
-                    android:textColor="#4B4B4B"
-                    android:textSize="16dp"
-                    android:maxLength="260" />
 
-            </LinearLayout>
-        </ScrollView>
+        </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
 
 
@@ -164,6 +215,5 @@
         android:layout_marginRight="25dp"
         app:elevation="20dp"
         android:elevation="20dp"/>
-
 
 </RelativeLayout>
