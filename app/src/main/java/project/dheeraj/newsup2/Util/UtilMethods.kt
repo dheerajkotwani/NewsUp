@@ -59,7 +59,7 @@ object UtilMethods{
             }
 
 
-            Log.d("Date ", "$formattedDate | $formattedTime")
+//            Log.d("Date ", "$formattedDate | $formattedTime")
         } catch (e: ParseException) {
             e.printStackTrace()
             Log.e("Error Date ", e.message)

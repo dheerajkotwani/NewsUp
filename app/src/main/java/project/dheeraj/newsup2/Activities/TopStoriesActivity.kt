@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import com.google.firebase.analytics.FirebaseAnalytics
+import kotlinx.android.synthetic.main.layout_top_headlines.*
 import project.dheeraj.newsup2.Adapters.HeadlinesRecyclerViewAdapter
 import project.dheeraj.newsup2.Model.ArticlesModel
 import project.dheeraj.newsup2.Model.NewsHeadlines
@@ -148,6 +149,12 @@ class TopStoriesActivity : AppCompatActivity() {
                         }
 
                     myNewsList.reverse()
+
+                    if (myNewsList.isNullOrEmpty())
+                        noItem.visibility = View.VISIBLE
+                    else {
+                        noItem.visibility = View.GONE
+                    }
 
                     headlinesRecyclerView.adapter = HeadlinesRecyclerViewAdapter(applicationContext,myNewsList)
                 })

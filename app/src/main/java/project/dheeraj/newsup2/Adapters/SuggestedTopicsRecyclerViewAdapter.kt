@@ -40,6 +40,7 @@ class SuggestedTopicsRecyclerViewAdapter(val context : Context, val suggestedTop
 
             val intent = Intent (context, TopStoriesActivity::class.java)
             intent.putExtra("name",suggestedTopics.get(position).title)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
 
         }

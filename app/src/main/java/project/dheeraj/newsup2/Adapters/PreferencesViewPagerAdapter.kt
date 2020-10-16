@@ -45,6 +45,7 @@ class PreferencesViewPagerAdapter(var context: Context, var articleList: List<Ne
             intent.putExtra(context.getString(R.string.urlToImage), articleList.get(position).urlToImage)
             intent.putExtra(context.getString(R.string.title), articleList.get(position).title)
             intent.putExtra(context.getString(R.string.publishedAt), articleList.get(position).publishedAt)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
 

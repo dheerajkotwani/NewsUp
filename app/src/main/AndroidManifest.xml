@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
 
     <application
         android:allowBackup="true"
@@ -15,23 +17,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.DeveloperInfoActivity"></activity>
-        <activity android:name=".Activities.IntroSliderActivity" />
-        <activity android:name=".Activities.SplashScreenActivity">
+        <activity android:name=".Activities.DeveloperInfoActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Activities.IntroSliderActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.SplashScreenActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.LoginActivity" />
-        <activity android:name=".Activities.SingleNewsActivity" />
-        <activity android:name=".Activities.TopStoriesActivity" />
-        <activity android:name=".Activities.MainActivity"/>
+        <activity android:name=".Activities.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.SingleNewsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.TopStoriesActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.MainActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <receiver android:name=".SmsReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

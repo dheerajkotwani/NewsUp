@@ -1,9 +1,11 @@
 package project.dheeraj.newsup2.Activities
 
+import android.Manifest
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.util.Log
@@ -11,6 +13,8 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.text.bold
 import androidx.core.widget.addTextChangedListener
@@ -22,6 +26,8 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.fragment_login_otp.*
 import project.dheeraj.newsup2.R
+import project.dheeraj.newsup2.SmsListener
+import project.dheeraj.newsup2.SmsReceiver
 import project.dheeraj.newsup2.Util.UtilMethods.isInternetAvailable
 import java.util.concurrent.TimeUnit
 
@@ -50,6 +56,11 @@ class LoginActivity : AppCompatActivity() {
     private var storedVerificationId: String? = null
     private lateinit var dialog: ProgressDialog
     private lateinit var sharedPreferences: SharedPreferences
+    val REQUEST_CODE_PERMISSIONS = 101
+    private val REQUIRED_PERMISSIONS = arrayOf(
+        Manifest.permission.READ_SMS,
+        Manifest.permission.RECEIVE_SMS
+    )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +95,12 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
+        if (!allPermissionsGranted()) {
+            ActivityCompat.requestPermissions(
+                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+            )
+        }
+
         buttonResendOTP.setOnClickListener {
 
             if(!isInternetAvailable(this)){
@@ -112,6 +129,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
+
         buttonGetOtp.setOnClickListener {
 
             if(!isInternetAvailable(this)){
@@ -170,9 +188,36 @@ class LoginActivity : AppCompatActivity() {
         }
 
         textChangeListner()
+        getOtpFromSms()
 
 
     }
+
+    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            baseContext, it
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun getOtpFromSms() {
+        SmsReceiver.bindListener (object : SmsListener {
+            override fun onMessagereceived(text: String) {
+
+                if(text.length == 6) {
+                    otp1.setText(text[0].toString())
+                    otp2.setText(text[1].toString())
+                    otp3.setText(text[2].toString())
+                    otp4.setText(text[3].toString())
+                    otp5.setText(text[4].toString())
+                    otp6.setText(text[5].toString())
+                    buttonVerify.callOnClick()
+                }
+
+            }
+        })
+    }
+
+
 
     override fun onBackPressed() {
         if (fragmentLoginOtp.visibility == View.VISIBLE) {
@@ -248,12 +293,12 @@ class LoginActivity : AppCompatActivity() {
                 // 2 - Auto-retrieval. On some devices Google Play services can automatically
                 //     detect the incoming verification SMS and perform verification without
                 //     user action.
-                Log.d("Verification Complete", "onVerificationCompleted:$credential")
-                Log.d("Current User: ", firebaseAuth.currentUser?.phoneNumber.toString())
-
-
-
-                verificationComplete()
+//                Log.d("Verification Complete", "onVerificationCompleted:$credential")
+//                Log.d("Current User: ", firebaseAuth.currentUser?.phoneNumber.toString())
+//
+//
+//
+//                verificationComplete()
 
             }
 
@@ -341,7 +386,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun verifyOTP(otp: String){
-
 
         if(otp != null && storedVerificationId != null){
             val credential = PhoneAuthProvider.getCredential(storedVerificationId!!, otp)

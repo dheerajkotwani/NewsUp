@@ -57,6 +57,7 @@ class TopStoriesHomeRecyclerViewAdapter(var context : Context, var newsheadlines
             intent.putExtra(context.getString(R.string.urlToImage), newsheadlines.get(position).urlToImage)
             intent.putExtra(context.getString(R.string.title), newsheadlines.get(position).title)
             intent.putExtra(context.getString(R.string.publishedAt), newsheadlines.get(position).publishedAt)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
 

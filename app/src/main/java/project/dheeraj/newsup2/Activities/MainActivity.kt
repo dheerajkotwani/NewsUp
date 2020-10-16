@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.setPadding
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -84,9 +85,10 @@ class MainActivity : AppCompatActivity() {
         skeleton.shimmerDurationInMillis = 1500
         skeleton.showSkeleton()
 
-        val screenWidth = getScreenWidth()
+
+        Log.e("Screen Width", getScreenWidth().toString())
         preferencesViewPager.clipToPadding = false
-        preferencesViewPager.setPadding(0,0,220,0)
+        preferencesViewPager.setPadding(0, 0, (getScreenWidth()*0.2).toInt(), 0)
 
         val gifImage = findViewById<ImageView>(R.id.no_internet_image)
 
@@ -130,7 +132,7 @@ class MainActivity : AppCompatActivity() {
 
         viewBookmarks.setOnClickListener {
 
-            val intent = Intent (this, TopStoriesActivity::class.java)
+            val intent = Intent(this, TopStoriesActivity::class.java)
             intent.putExtra("name", "Bookmarks")
             startActivity(intent)
             
@@ -149,14 +151,20 @@ class MainActivity : AppCompatActivity() {
                 "Business"
             )
         )
-        suggestedTopics.add(            SuggestedTopics(
+        suggestedTopics.add(
+            SuggestedTopics(
                 R.drawable.ic_undraw_compose_music_ovo2,
                 "Entertainment"
             )
         )
         suggestedTopics.add(SuggestedTopics(R.drawable.ic_undraw_game_day_ucx9, "Sports"))
         suggestedTopics.add(SuggestedTopics(R.drawable.ic_undraw_science_fqhl, "Science"))
-        suggestedTopics.add(SuggestedTopics(R.drawable.ic_undraw_virtual_reality_y5ig, "Technology"))
+        suggestedTopics.add(
+            SuggestedTopics(
+                R.drawable.ic_undraw_virtual_reality_y5ig,
+                "Technology"
+            )
+        )
         suggestedTopics.add(SuggestedTopics(R.drawable.ic_undraw_medicine_b1ol, "Medical"))
         suggestedTopics.add(
             SuggestedTopics(
@@ -229,9 +237,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getScreenWidth(): Int{
+    private fun getScreenWidth(): Int {
 
-        val display = getWindowManager().getDefaultDisplay();
+        val display = windowManager.defaultDisplay;
+
+        val density = resources.displayMetrics.density
         val size = Point();
         display.getSize(size);
         val width = size.x;
@@ -239,7 +249,8 @@ class MainActivity : AppCompatActivity() {
         Log.e("Width", "" + width);
         Log.e("height", "" + height);
 
-        return (width/3)*10
+
+        return width
     }
 
     private fun observeNews() {
@@ -247,26 +258,26 @@ class MainActivity : AppCompatActivity() {
         viewModel.topliveData.observe(this, androidx.lifecycle.Observer {
             var myNewsList = mutableListOf<NewsHeadlines>()
 
-                    for (i in it.articles) {
+            for (i in it.articles) {
 
-                        if (i.urlToImage != null) {
+                if (i.urlToImage != null) {
 
-                            myNewsList.add(
-                                NewsHeadlines(
-                                    i.author,
-                                    i.source.id,
-                                    i.source.name,
-                                    i.title,
-                                    i.description,
-                                    i.url,
-                                    i.urlToImage,
-                                    i.publishedAt,
-                                    i.content
-                                )
-                            )
-                        }
+                    myNewsList.add(
+                        NewsHeadlines(
+                            i.author,
+                            i.source.id,
+                            i.source.name,
+                            i.title,
+                            i.description,
+                            i.url,
+                            i.urlToImage,
+                            i.publishedAt,
+                            i.content
+                        )
+                    )
+                }
 
-                        homeSwipeRefreshLayout.isRefreshing = false
+                homeSwipeRefreshLayout.isRefreshing = false
 
             }
 
