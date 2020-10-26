@@ -54,9 +54,9 @@ class TopStoriesActivity : AppCompatActivity() {
         skeleton.shimmerDurationInMillis = 1500
         skeleton.showSkeleton()
 
-        if(intent.getStringExtra("name").isNotEmpty()){
+        if(intent.getStringExtra("name")!!.isNotEmpty()){
             pageTitle.text = intent.getStringExtra("name")
-            title = intent.getStringExtra("name")
+            title = intent.getStringExtra("name")!!
         }
 
         observeNews()

@@ -37,7 +37,7 @@
                 android:id="@+id/image_view_top_headlines_round"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/technology_1493463690"
+                android:src="@drawable/placeholder_image"
                 android:scaleType="centerCrop"/>
 
 

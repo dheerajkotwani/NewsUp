@@ -38,14 +38,14 @@ class PreferencesViewPagerAdapter(var context: Context, var articleList: List<Ne
 
         view.setOnClickListener {
             val intent = Intent(context, SingleNewsActivity::class.java);
-            intent.putExtra(context.getString(R.string.content), articleList.get(position).content)
-            intent.putExtra(context.getString(R.string.description), articleList.get(position).description)
-            intent.putExtra(context.getString(R.string.author), articleList.get(position).author)
-            intent.putExtra(context.getString(R.string.url), articleList.get(position).url)
-            intent.putExtra(context.getString(R.string.urlToImage), articleList.get(position).urlToImage)
-            intent.putExtra(context.getString(R.string.title), articleList.get(position).title)
-            intent.putExtra(context.getString(R.string.publishedAt), articleList.get(position).publishedAt)
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra(context.getString(R.string.content), articleList[position].content)
+            intent.putExtra(context.getString(R.string.description), articleList[position].description)
+            intent.putExtra(context.getString(R.string.author), articleList[position].author)
+            intent.putExtra(context.getString(R.string.url), articleList[position].url)
+            intent.putExtra(context.getString(R.string.urlToImage), articleList[position].urlToImage)
+            intent.putExtra(context.getString(R.string.title), articleList[position].title)
+            intent.putExtra(context.getString(R.string.publishedAt), articleList[position].publishedAt)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
         }
 

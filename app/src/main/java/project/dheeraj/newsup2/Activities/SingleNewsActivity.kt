@@ -44,9 +44,25 @@ class SingleNewsActivity : AppCompatActivity() {
         val fabShare = findViewById<FloatingActionButton>(R.id.news_full_fab_share)
 
         title.text = intent.getStringExtra(getString(R.string.title))
-        description.text =
-            intent.getStringExtra(getString(R.string.description))!!.substringBeforeLast('[')
-        content.text = intent.getStringExtra(getString(R.string.content))
+        if (intent.hasExtra(getString(R.string.description))) {
+//            if (intent.getStringExtra(getString(R.string.description))!!.contains('.'))
+//                description.text =
+//                    intent.getStringExtra(getString(R.string.description))!!.substringBeforeLast(".")
+//            else
+            try {
+                description.text =
+                    intent.getStringExtra(getString(R.string.description))!!
+            }
+            catch (e: Exception) {
+                description.text = ""
+            }
+        }
+        if (intent.hasExtra(getString(R.string.content))) {
+            if (intent.getStringExtra(getString(R.string.content))!!.contains('['))
+                content.text = intent.getStringExtra(getString(R.string.content))!!.substringBeforeLast('[')
+            else
+                content.text = intent.getStringExtra(getString(R.string.content))
+        }
         date.text = convertISOTime(
             applicationContext,
             intent.getStringExtra(getString(R.string.publishedAt))
@@ -89,7 +105,7 @@ class SingleNewsActivity : AppCompatActivity() {
             Toast.makeText(this, getString(R.string.bookmarkRemoved), Toast.LENGTH_SHORT).show()
             fabBookmarkBorder.visibility = View.VISIBLE
             fabBookmarkFilled.visibility = View.GONE
-            BookmarkDatabase(this).bookmarkDao().removeBookmark(intent.getStringExtra(getString(R.string.title)))
+            BookmarkDatabase(this).bookmarkDao().removeBookmark(intent.getStringExtra(getString(R.string.title))!!)
         }
 
         fabShare.setOnClickListener {
@@ -124,7 +140,7 @@ class SingleNewsActivity : AppCompatActivity() {
                 getString(
                     R.string.title
                 )
-            )
+            )!!
         )
         if (!item.isNullOrEmpty()) {
             fabBookmarkBorder.visibility = View.GONE

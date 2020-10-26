@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.setPadding
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        viewModel = ViewModelProviders.of(this).get(TopStoriesViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TopStoriesViewModel::class.java)
 
         topStories = findViewById(R.id.view_all_top_stories)
         welcomeText = findViewById(R.id.welcomeTextView)
@@ -205,25 +206,41 @@ class MainActivity : AppCompatActivity() {
 
     private fun getCurrentTime() {
 
-        val dateFormatter = SimpleDateFormat("hh a")
+        val dateFormatter = SimpleDateFormat("HH")
         dateFormatter.isLenient = false
         val today = Date()
-        val s = dateFormatter.format(today)
+        val s = dateFormatter.format(today).toInt()
 
-        val time = s.subSequence(0, 2).toString().toInt()
-        val timeDuration = s.subSequence(3, 5).toString()
-
-        if ((time < 4 || time == 12) && (timeDuration.equals("PM") || timeDuration.equals("pm"))) {
-            welcomeText.text = "Good Afternoon!"
-        } else if (time in 5..8 && (timeDuration == "PM" || timeDuration.equals("pm"))) {
-            welcomeText.text = "Good Evening!"
-        } else if (time in 9..11 && (timeDuration == "PM" || timeDuration.equals("pm"))) {
-            welcomeText.text = "Welcome!"
-        } else if ((time < 4 || time == 12) && (timeDuration.equals("AM") || timeDuration.equals("am"))) {
-            welcomeText.text = "Welcome!"
-        } else if (time in 5..11 && (timeDuration.equals("AM") || timeDuration.equals("am"))) {
-            welcomeText.text = "Good Morning!"
+        Log.e("Welcome", s.toString())
+        when {
+            s < 5 -> {
+                welcomeText.text = "Welcome!"
+            }
+            s in 5..11 -> {
+                welcomeText.text = "Good Morning!"
+            }
+            s in 12..13 -> {
+                welcomeText.text = "Good Afternoon!"
+            }
+            else -> {
+                welcomeText.text = "Good Evening!"
+            }
         }
+
+//        val time = s.subSequence(0, 2).toString().toInt()
+//        val timeDuration = s.subSequence(3, 5).toString()
+//
+//        if ((time < 4 || time == 12) && (timeDuration.equals("PM") || timeDuration.equals("pm"))) {
+//            welcomeText.text = "Good Afternoon!"
+//        } else if (time in 5..8 && (timeDuration == "PM" || timeDuration.equals("pm"))) {
+//            welcomeText.text = "Good Evening!"
+//        } else if (time in 9..11 && (timeDuration == "PM" || timeDuration.equals("pm"))) {
+//            welcomeText.text = "Welcome!"
+//        } else if ((time < 4 || time == 12) && (timeDuration.equals("AM") || timeDuration.equals("am"))) {
+//            welcomeText.text = "Welcome!"
+//        } else if (time in 5..11 && (timeDuration.equals("AM") || timeDuration.equals("am"))) {
+//            welcomeText.text = "Good Morning!"
+//        }
 
     }
 

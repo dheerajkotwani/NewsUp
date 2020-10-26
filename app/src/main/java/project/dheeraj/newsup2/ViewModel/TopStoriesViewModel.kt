@@ -36,7 +36,7 @@ class TopStoriesViewModel: ViewModel() {
                 )
             }
             catch (e: Exception) {
-                Log.e("Get Feeds", e.message)
+                Log.e("Get Feeds", e.message!!)
             }
         }
     }
@@ -49,7 +49,7 @@ class TopStoriesViewModel: ViewModel() {
                 )
             }
             catch (e: Exception) {
-                Log.e("Get Feeds", e.message)
+                Log.e("Get Feeds", e.message!!)
             }
         }
     }
@@ -62,7 +62,7 @@ class TopStoriesViewModel: ViewModel() {
                 )
             }
             catch (e: Exception) {
-                Log.e("Get Feeds", e.message)
+                Log.e("Get Feeds", e.message!!)
             }
         }
     }
@@ -75,7 +75,7 @@ class TopStoriesViewModel: ViewModel() {
                 )
             }
             catch (e: Exception) {
-                Log.e("Get Feeds", e.message)
+                Log.e("Get Feeds", e.message!!)
             }
         }
     }
@@ -88,7 +88,7 @@ class TopStoriesViewModel: ViewModel() {
                 )
             }
             catch (e: Exception) {
-                Log.e("Get Feeds", e.message)
+                Log.e("Get Feeds", e.message!!)
             }
         }
     }
@@ -101,7 +101,7 @@ class TopStoriesViewModel: ViewModel() {
                 )
             }
             catch (e: Exception) {
-                Log.e("Get Feeds", e.message)
+                Log.e("Get Feeds", e.message!!)
             }
         }
     }
@@ -114,7 +114,7 @@ class TopStoriesViewModel: ViewModel() {
                 )
             }
             catch (e: Exception) {
-                Log.e("Get Feeds", e.message)
+                Log.e("Get Feeds", e.message!!)
             }
         }
     }
@@ -127,7 +127,7 @@ class TopStoriesViewModel: ViewModel() {
                 )
             }
             catch (e: Exception) {
-                Log.e("Get Feeds", e.message)
+                Log.e("Get Feeds", e.message!!)
             }
         }
     }
@@ -140,7 +140,7 @@ class TopStoriesViewModel: ViewModel() {
                 )
             }
             catch (e: Exception) {
-                Log.e("Get Feeds", e.message)
+                Log.e("Get Feeds", e.message!!)
             }
         }
     }

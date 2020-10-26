@@ -369,8 +369,6 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
 
-                    val user = task.result?.user
-                    // ...
                 } else {
                     // Sign in failed, display a message and update the UI
                     dialog.dismiss()
