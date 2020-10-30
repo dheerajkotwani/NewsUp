@@ -211,7 +211,7 @@ class MainActivity : AppCompatActivity() {
         val today = Date()
         val s = dateFormatter.format(today).toInt()
 
-        Log.e("Welcome", s.toString())
+//        Log.e("Welcome", s.toString())
         when {
             s < 5 -> {
                 welcomeText.text = "Welcome!"

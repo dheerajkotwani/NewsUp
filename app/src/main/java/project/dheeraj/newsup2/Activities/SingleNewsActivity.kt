@@ -45,23 +45,26 @@ class SingleNewsActivity : AppCompatActivity() {
 
         title.text = intent.getStringExtra(getString(R.string.title))
         if (intent.hasExtra(getString(R.string.description))) {
-//            if (intent.getStringExtra(getString(R.string.description))!!.contains('.'))
-//                description.text =
-//                    intent.getStringExtra(getString(R.string.description))!!.substringBeforeLast(".")
-//            else
             try {
                 description.text =
-                    intent.getStringExtra(getString(R.string.description))!!
+                    intent.getStringExtra(getString(R.string.description)).toString()
             }
             catch (e: Exception) {
                 description.text = ""
             }
         }
         if (intent.hasExtra(getString(R.string.content))) {
-            if (intent.getStringExtra(getString(R.string.content))!!.contains('['))
-                content.text = intent.getStringExtra(getString(R.string.content))!!.substringBeforeLast('[')
-            else
-                content.text = intent.getStringExtra(getString(R.string.content))
+            if (!intent.getStringExtra(getString(R.string.content)).isNullOrEmpty()) {
+                if (intent.getStringExtra(getString(R.string.content)).toString().contains('['))
+                    content.text = intent.getStringExtra(getString(R.string.content)).toString()
+                        .substringBeforeLast('[')
+                else
+                    content.text = intent.getStringExtra(getString(R.string.content)).toString()
+            }
+            else {
+                content.text = ""
+                content.text = ""
+            }
         }
         date.text = convertISOTime(
             applicationContext,
@@ -109,15 +112,15 @@ class SingleNewsActivity : AppCompatActivity() {
         }
 
         fabShare.setOnClickListener {
-            Toast.makeText(this, getString(R.string.share), Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, getString(R.string.share), Toast.LENGTH_SHORT).show()
             val imageUri = Uri.parse(intent.getStringExtra(getString(R.string.urlToImage)))
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(
                     Intent.EXTRA_TEXT, "*${intent.getStringExtra(getString(R.string.title))}*\n\n" +
                             "${intent.getStringExtra(getString(R.string.description))}\n\n" +
-                            "To read full news visit:\n${intent.getStringExtra(getString(R.string.url))}\n\n" +
-                            "Sent from NewsUp Android App\nDeveloper: Dheeraj Kotwani"
+                            "To read full news visit:\n${intent.getStringExtra(getString(R.string.url))}\n\n"
+                            +"Download the News Up App from https://play.google.com/store/apps/details?id=project.dheeraj.newsup2"
                 )
                 type = "text/simple"
             }

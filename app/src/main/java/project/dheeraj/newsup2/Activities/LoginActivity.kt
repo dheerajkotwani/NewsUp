@@ -57,11 +57,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var dialog: ProgressDialog
     private lateinit var sharedPreferences: SharedPreferences
     val REQUEST_CODE_PERMISSIONS = 101
-    private val REQUIRED_PERMISSIONS = arrayOf(
-        Manifest.permission.READ_SMS,
-        Manifest.permission.RECEIVE_SMS
-    )
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,11 +90,11 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        if (!allPermissionsGranted()) {
-            ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
-            )
-        }
+//        if (!allPermissionsGranted()) {
+//            ActivityCompat.requestPermissions(
+//                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+//            )
+//        }
 
         buttonResendOTP.setOnClickListener {
 
@@ -188,34 +183,34 @@ class LoginActivity : AppCompatActivity() {
         }
 
         textChangeListner()
-        getOtpFromSms()
+//        getOtpFromSms()
 
 
     }
 
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            baseContext, it
-        ) == PackageManager.PERMISSION_GRANTED
-    }
+//    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+//        ContextCompat.checkSelfPermission(
+//            baseContext, it
+//        ) == PackageManager.PERMISSION_GRANTED
+//    }
 
-    fun getOtpFromSms() {
-        SmsReceiver.bindListener (object : SmsListener {
-            override fun onMessagereceived(text: String) {
-
-                if(text.length == 6) {
-                    otp1.setText(text[0].toString())
-                    otp2.setText(text[1].toString())
-                    otp3.setText(text[2].toString())
-                    otp4.setText(text[3].toString())
-                    otp5.setText(text[4].toString())
-                    otp6.setText(text[5].toString())
-                    buttonVerify.callOnClick()
-                }
-
-            }
-        })
-    }
+//    fun getOtpFromSms() {
+//        SmsReceiver.bindListener (object : SmsListener {
+//            override fun onMessagereceived(text: String) {
+//
+//                if(text.length == 6) {
+//                    otp1.setText(text[0].toString())
+//                    otp2.setText(text[1].toString())
+//                    otp3.setText(text[2].toString())
+//                    otp4.setText(text[3].toString())
+//                    otp5.setText(text[4].toString())
+//                    otp6.setText(text[5].toString())
+//                    buttonVerify.callOnClick()
+//                }
+//
+//            }
+//        })
+//    }
 
 
 
@@ -307,7 +302,7 @@ class LoginActivity : AppCompatActivity() {
                 // for instance if the the phone number format is not valid.
                 Log.w("Error", "onVerificationFailed ${e.message}")
                 dialog.dismiss()
-//                Toast.makeText(this, "Verification Failed ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "Verification Failed ${e.message}", Toast.LENGTH_SHORT).show()
 
                 if (e is FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
@@ -329,6 +324,7 @@ class LoginActivity : AppCompatActivity() {
                 // now need to ask the user to enter the code and then construct a credential
                 // by combining the code with a verification ID.
                 Log.d("Code Sent", "onCodeSent:$verificationId")
+                Toast.makeText(this@LoginActivity, "Verification code sent",Toast.LENGTH_SHORT).show()
 
                 // Save verification ID and resending token so we can use them later
                 storedVerificationId = verificationId

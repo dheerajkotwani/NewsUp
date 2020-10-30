@@ -46,7 +46,7 @@ object UtilMethods{
             formattedDate = SimpleDateFormat(context.getString(R.string.date_format)).format(convertedDate)
             formattedTime = SimpleDateFormat(context.getString(R.string.time_format)).format(convertedDate)
 
-            Log.e("Time", formattedTime.toString())
+//            Log.e("Time", formattedTime.toString())
 
             if((formattedTime.subSequence(6,8).toString().equals("PM") || formattedTime.subSequence(6,8).toString().equals("pm")) && formattedTime.subSequence(0,2).toString().toInt()>12){
                 formattedTime = (formattedTime.subSequence(0,2).toString().toInt()-12).toString()+formattedTime.subSequence(2,8).toString()
