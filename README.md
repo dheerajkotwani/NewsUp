@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/dheerajkotwani/NewsUp/master/mockups/NewsUp_banner.png)
+![](https://raw.githubusercontent.com/dheerajkotwani/NewsUp/master/mockups/NewsUp_banner2.png)
 # News Up 🗞 
 [![License](https://img.shields.io/badge/license-MIT-%2397ca00.svg)](https://github.com/dheerajkotwani/GitCheatSheet/blob/master/LICENSE.md)
 ![UI Library shield](https://img.shields.io/badge/LibraryType-UI-blue.svg)
