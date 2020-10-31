@@ -144,34 +144,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun getTopics() {
 
-        var suggestedTopics = mutableListOf<SuggestedTopics>()
-
-        suggestedTopics.add(
-            SuggestedTopics(
-                R.drawable.ic_undraw_finance_0bdk,
-                "Business"
-            )
-        )
-        suggestedTopics.add(
-            SuggestedTopics(
-                R.drawable.ic_undraw_compose_music_ovo2,
-                "Entertainment"
-            )
-        )
-        suggestedTopics.add(SuggestedTopics(R.drawable.ic_undraw_game_day_ucx9, "Sports"))
-        suggestedTopics.add(SuggestedTopics(R.drawable.ic_undraw_science_fqhl, "Science"))
-        suggestedTopics.add(
-            SuggestedTopics(
-                R.drawable.ic_undraw_virtual_reality_y5ig,
-                "Technology"
-            )
-        )
-        suggestedTopics.add(SuggestedTopics(R.drawable.ic_undraw_medicine_b1ol, "Medical"))
-        suggestedTopics.add(
-            SuggestedTopics(
-                R.drawable.ic_undraw_travel_together_re_kjf2,
-                "International"
-            )
+        val suggestedTopics = mutableListOf(
+            SuggestedTopics(R.drawable.ic_undraw_finance_0bdk, "Business"),
+            SuggestedTopics(R.drawable.ic_undraw_compose_music_ovo2, "Entertainment"),
+            SuggestedTopics(R.drawable.ic_undraw_game_day_ucx9, "Sports"),
+            SuggestedTopics(R.drawable.ic_undraw_science_fqhl, "Science"),
+            SuggestedTopics(R.drawable.ic_undraw_virtual_reality_y5ig, "Technology"),
+            SuggestedTopics(R.drawable.ic_undraw_medicine_b1ol, "Medical"),
+            SuggestedTopics(R.drawable.ic_undraw_travel_together_re_kjf2, "International")
         )
 
         suggestedTopicsRecyclerView.layoutManager = GridLayoutManager(applicationContext, 3)
@@ -212,19 +192,11 @@ class MainActivity : AppCompatActivity() {
         val s = dateFormatter.format(today).toInt()
 
 //        Log.e("Welcome", s.toString())
-        when {
-            s < 5 -> {
-                welcomeText.text = "Welcome!"
-            }
-            s in 5..11 -> {
-                welcomeText.text = "Good Morning!"
-            }
-            s in 12..13 -> {
-                welcomeText.text = "Good Afternoon!"
-            }
-            else -> {
-                welcomeText.text = "Good Evening!"
-            }
+        welcomeText.text = when {
+            s < 5 -> "Welcome!"
+            s in 5..11 -> "Good Morning!"
+            s in 12..13 -> "Good Afternoon!"
+            else -> "Good Evening!"
         }
 
 //        val time = s.subSequence(0, 2).toString().toInt()
