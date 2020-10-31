@@ -1,9 +1,9 @@
-![](./mockups/NewsUp_banner.png)
+![](https://raw.githubusercontent.com/dheerajkotwani/NewsUp/master/mockups/NewsUp_banner.png)
 # News Up 🗞 
 [![License](https://img.shields.io/badge/license-MIT-%2397ca00.svg)](https://github.com/dheerajkotwani/GitCheatSheet/blob/master/LICENSE.md)
 ![UI Library shield](https://img.shields.io/badge/LibraryType-UI-blue.svg)
 ![Minimum API Level](https://img.shields.io/badge/Min%20API%20Level-21-green)
-![Maximum API Level](https://img.shields.io/badge/Max%20API%20Level-29-orange)
+![Maximum API Level](https://img.shields.io/badge/Max%20API%20Level-30-orange)
 [![Github Followers](https://img.shields.io/github/followers/dheerajkotwani?label=Follow&style=social)](https://github.com/dheerajkotwani)
 [![GitHub stars](https://img.shields.io/github/stars/dheerajkotwani/NewsUp?style=social)](https://github.com/dheerajkotwani/NewsUp)
 [![GitHub forks](https://img.shields.io/github/forks/dheerajkotwani/NewsUp?style=social)](https://github.com/dheerajkotwani/NewsUp)
@@ -13,7 +13,7 @@
 
 ## App Link
 ##### You can directly download the latest version of the app from the play store. 🎯
-<a href='https://play.google.com/store/apps/details?id=project.dheeraj.gitfinder'><img align='center' height='85' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'></a>
+<a href='https://play.google.com/store/apps/details?id=project.dheeraj.newsup2'><img align='center' height='85' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'></a>
 
 ## 🔥 Features
 📰 Get Latest updated News.
@@ -44,7 +44,7 @@
 
  
 ## 📷 Screen Shots
-![](./mockups/newsup_screenshot.png)
+![](https://github.com/dheerajkotwani/NewsUp/blob/master/mockups/newsup_screenshot.png)
 
 ## Donate
 ##### If you like the project and wanna support me develop new stuff, You can buy me a coffee.
